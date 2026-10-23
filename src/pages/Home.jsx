@@ -2,26 +2,29 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 import {
   CalendarCheck, Siren, Search, FileText, ArrowRight, Ambulance, Droplet, Microscope, Pill,
-  Quote, MapPin, Clock, Car, Landmark, Award, Building2, Wallet, Users, MessageCircle,
+  Quote, MapPin, Clock, Car, Landmark, Award, Building2, Wallet, Users,
 } from 'lucide-react'
-import { hospital, specialities, doctors, testimonials, gallery, whyUs, faqs, photo } from '../data'
+import { hospital, specialities, doctors, testimonials, gallery, whyUs, faqs, photo, stock } from '../data'
 import { useT } from '../i18n'
-import { SectionHead, SpecialityCard, DoctorCard, Counter, Carousel, Faq, Sent, Heartbeat, waLink } from '../ui'
+import { SectionHead, SpecialityCard, DoctorCard, Counter, Carousel, Faq, Sent, Heartbeat, WhatsAppIcon, waLink } from '../ui'
 
 export function Hero() {
   const { t } = useT()
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 to-white">
       <div aria-hidden className="absolute -left-40 top-20 size-[28rem] rounded-full bg-brand-100/60 blur-3xl" />
-      {/* Sits in the empty band below the hero content and above the quick-action cards, so it never crosses text. */}
-      <Heartbeat className="absolute inset-x-0 bottom-[4.5rem] h-14 w-full text-brand-600 lg:bottom-[5rem] lg:h-20" />
-      <div className="container-x relative grid items-center gap-12 pb-36 pt-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:pb-44 lg:pt-20">
+      <div className="container-x relative grid items-center gap-12 pb-24 pt-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:pb-32 lg:pt-20">
         <div>
           <p className="eyebrow mb-5">{t('heroEyebrow')}</p>
           <h1 className="text-[2.6rem] font-bold leading-[1.08] tracking-tight sm:text-6xl lg:text-[4.25rem]">
             {t('heroTitle')}
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted sm:text-xl">{t('heroText')}</p>
+          {/* The heartbeat gets its own row in the layout, so text flows around it and can never sit under it.
+              It bleeds to both screen edges and passes behind the photo (z-10); the section's overflow-hidden clips it. */}
+          <div aria-hidden className="relative my-5 h-14 lg:my-6 lg:h-16">
+            <Heartbeat beats={18} className="absolute inset-y-0 -left-[50vw] h-full w-[200vw] max-w-none text-brand-600" />
+          </div>
+          <p className="max-w-xl text-lg text-muted sm:text-xl">{t('heroText')}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/book" className="btn-primary"><CalendarCheck className="size-5" /> {t('book')}</Link>
             <a href={`tel:${hospital.emergency.replace(/\s/g, '')}`} className="btn-outline !border-er-600/30 !text-er-600 hover:!bg-er-600/5 hover:!border-er-600"><Siren className="size-5" /> {t('emergency')}</a>
@@ -33,8 +36,8 @@ export function Hero() {
           </ul>
         </div>
 
-        <div className="relative">
-          <img src={photo('hero', 1000, 1100)} alt="Doctor speaking with a patient (placeholder photo)" fetchPriority="high"
+        <div className="relative z-10">
+          <img src={photo(stock.heroCare, 1000, 1100)} alt="Doctor talking with a patient (stock photo)" fetchPriority="high"
             className="aspect-[10/11] w-full rounded-[2rem] object-cover shadow-2xl shadow-brand-900/15" />
           <div className="absolute -bottom-6 left-4 flex items-center gap-3 rounded-2xl bg-white p-4 pr-6 shadow-xl shadow-brand-900/15 sm:-left-8">
             <span className="grid size-12 place-items-center rounded-full bg-er-600/10 text-er-600"><Ambulance className="size-6" /></span>
@@ -109,7 +112,7 @@ function About() {
     <section className="section">
       <div className="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div className="reveal relative order-last lg:order-first">
-          <img src={photo('about', 900, 700)} alt="Hospital reception area (placeholder photo)" loading="lazy" className="aspect-[9/7] w-full rounded-[2rem] object-cover" />
+          <img src={photo(stock.reception, 900, 700)} alt="Hospital reception area (stock photo)" loading="lazy" className="aspect-[9/7] w-full rounded-[2rem] object-cover" />
           <div className="absolute -bottom-8 right-6 rounded-2xl bg-brand-700 p-6 text-white shadow-xl sm:right-10">
             <p className="font-display text-4xl font-bold">{specialities.length}</p>
             <p className="text-sm text-white/80">services under one roof</p>
@@ -292,7 +295,7 @@ export function AppointmentForm({ initialDept = '', initialDoctor = '' }) {
           <option value="">{deptDocs.length ? 'Any doctor' : 'No specific doctor'}</option>{deptDocs.map((d) => <option key={d.slug} value={d.slug}>{d.name}</option>)}
         </select></div>
       <div className="grid gap-1.5 sm:col-span-2"><label htmlFor="ap-date">{t('date')} <span className="font-normal text-muted">(optional)</span></label><input id="ap-date" name="date" type="date" min={today} /></div>
-      <button className="btn-primary sm:col-span-2 sm:justify-self-start"><MessageCircle className="size-5" /> {t('submit')}</button>
+      <button className="btn-primary sm:col-span-2 sm:justify-self-start"><WhatsAppIcon className="size-5" /> {t('submit')}</button>
       <p className="text-sm text-muted sm:col-span-2">This sends a WhatsApp message to our front desk. <b className="font-semibold text-ink">Your appointment is confirmed only when they reply.</b> This website does not store your details.</p>
     </form>
   )
@@ -349,7 +352,7 @@ export function EmergencyBand() {
     <section className="container-x pb-16 lg:pb-24">
       <div className="relative overflow-hidden rounded-[2rem] bg-brand-900 px-8 py-12 text-white lg:px-16 lg:py-16">
         <div aria-hidden className="absolute -right-16 -top-16 size-72 rounded-full bg-er-600/20 blur-2xl" />
-        <Heartbeat className="absolute inset-x-0 bottom-1 h-9 w-full text-er-500 lg:h-12" />
+        <Heartbeat beats={9} className="absolute inset-x-0 bottom-1 h-9 w-full text-er-500 lg:h-12" />
         <div className="relative flex flex-wrap items-center justify-between gap-8">
           <div className="max-w-xl">
             <h2 className="text-3xl font-semibold tracking-tight !text-white sm:text-4xl">{t('ctaTitle')}</h2>

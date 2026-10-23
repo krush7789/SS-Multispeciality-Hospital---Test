@@ -21,8 +21,15 @@ export const hospital = {
   socials: { facebook: '#', instagram: '#', youtube: '#' },
 }
 
-const img = (seed, w = 800, h = 600) => `https://picsum.photos/seed/ss-${seed}/${w}/${h}`
-export const photo = img
+// Stock photos from Unsplash (free licence, images.unsplash.com only — never plus.unsplash.com).
+// Placeholders until the hospital's own photos are available.
+export const photo = (id, w = 800, h = 600) => `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&q=70&auto=format`
+export const stock = {
+  hero: '1532938911079-1b06ac7ceec7',
+  heroCare: '1666214277730-e9c7e755e5a3',
+  reception: '1519494026892-80bbd2d6fd0d',
+  building: '1586773860418-d37222d8fce3',
+}
 
 export const groups = [
   { id: 'clinical', label: 'Clinical care' },
@@ -144,13 +151,31 @@ export const testimonials = [
   { text: 'Dialysis sessions are always on time and the staff are patient with elderly people like my father.', name: 'Sunita D.', place: 'Milak' },
 ]
 
-const cats = ['Building', 'Wards', 'OT', 'Diagnostics', 'Events']
-export const galleryCats = cats
-export const gallery = Array.from({ length: 18 }, (_, i) => ({
-  src: img(`g${i}`, 800, [600, 1000, 800][i % 3]),
-  cat: cats[i % cats.length],
-  alt: `${cats[i % cats.length]} photo ${Math.floor(i / cats.length) + 1} (placeholder)`,
-}))
+export const galleryCats = ['Building', 'Wards', 'Operation theatre', 'Diagnostics', 'Patient care']
+const shot = (id, cat, alt, h = 600) => ({ src: photo(id, 800, h), full: photo(id, 1600, h * 2), cat, alt: `${alt} (stock photo)` })
+// Ordered so neighbouring tiles differ in category and height in the masonry grid.
+export const gallery = [
+  shot('1519494026892-80bbd2d6fd0d', 'Building', 'Reception and help desk'),
+  shot('1775947933085-30050ddad6b3', 'Operation theatre', 'Surgical team in the operating room', 1000),
+  shot('1538108149393-fbbd81895907', 'Wards', 'Private patient room'),
+  shot('1582719471384-894fbb16e074', 'Diagnostics', 'Pathologist at the microscope', 800),
+  shot('1758691462863-9e1b8a863140', 'Patient care', 'Doctor talking with a patient', 1000),
+  shot('1778151270757-f3793f65e2de', 'Wards', 'General ward with monitored beds'),
+  shot('1586773860418-d37222d8fce3', 'Building', 'Hospital building exterior', 800),
+  shot('1640876777002-badf6aee5bcc', 'Operation theatre', 'Surgeons during an operation'),
+  shot('1606206591513-adbfbdd7a177', 'Diagnostics', 'Blood sample tubes in the lab', 1000),
+  shot('1517120026326-d87759a7b63b', 'Wards', 'Newborn incubator being moved to the NICU', 800),
+  shot('1758691461990-03b49d969495', 'Patient care', 'Doctor writing on a patient chart'),
+  shot('1551076805-e1869033e561', 'Operation theatre', 'Prepared operating theatre', 1000),
+  shot('1512678080530-7760d81faba6', 'Wards', 'Recovery room with bed and seating'),
+  shot('1518152006812-edab29b069ac', 'Diagnostics', 'Laboratory microscopes', 800),
+  shot('1769488718464-882e6c1adfd9', 'Building', 'Hospital corridor', 1000),
+  shot('1516574187841-cb9cc2ca948b', 'Wards', 'IV drip stand', 800),
+  shot('1551190822-a9333d879b1f', 'Operation theatre', 'Surgeon at work'),
+  shot('1579154204601-01588f351e67', 'Diagnostics', 'Lab with analysers', 1000),
+  shot('1758691462878-6edc3d3da1be', 'Patient care', 'Doctor consulting a patient', 800),
+  shot('1778151270902-cb0ca572f2ee', 'Wards', 'Patient room with adjustable bed'),
+]
 
 export const whyUs = [
   { title: 'Experienced specialists', text: 'Senior doctors across 15 specialities, with OPD timings you can plan around.' },

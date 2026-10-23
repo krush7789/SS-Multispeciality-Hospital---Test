@@ -61,7 +61,8 @@
 @keyframes pulse-dot { 0%, 100% { box-shadow: 0 0 0 0 rgb(214 64 47 / 0.6); } 50% { box-shadow: 0 0 0 6px rgb(214 64 47 / 0); } }
 .pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
 
-/* Heartbeat pulse: a 280-unit dash runs the full ECG path (~2070 units), then repeats. */
-@keyframes ecg-run { from { stroke-dashoffset: 280; } to { stroke-dashoffset: -2080; } }
-.ecg-pulse { stroke-dasharray: 280 2400; animation: ecg-run 4.5s linear infinite; opacity: .3; }
+/* Heartbeat pulse: a repeating pattern (280-unit pulse every 2080 units) shifted by exactly one period,
+   so the loop is seamless at any path length. */
+@keyframes ecg-run { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -2080; } }
+.ecg-pulse { stroke-dasharray: 280 1800; animation: ecg-run 4.5s linear infinite; opacity: .38; }
 dialog::backdrop { background: rgb(8 48 47 / 0.85); }
