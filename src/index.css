@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #eef6f6;
+  --color-brand-100: #d7eaea;
+  --color-brand-200: #aed3d4;
+  --color-brand-400: #4c9c9f;
+  --color-brand-600: #16676b;
+  --color-brand-700: #0f5257;
+  --color-brand-800: #0c4347;
+  --color-brand-900: #08302f;
+  --color-gold-400: #f0b72f;
+  --color-gold-500: #e0a100;
+  --color-gold-600: #b98200;
+  --color-er-500: #d6402f;
+  --color-er-600: #c0362c;
+  --color-ink: #14282a;
+  --color-muted: #566b6d;
+  --color-line: #dbe6e6;
+  --color-soft: #f4f8f8;
+
+  --font-display: "Sora", "Mukta", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Source Sans 3", "Mukta", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  /* 17px root (was 16px) scales every rem-based text size up ~6%; body copy lands at ~18px. */
+  html { scroll-behavior: smooth; font-size: 106.25%; }
+  body { @apply bg-white text-ink font-sans antialiased text-[1.0625rem] leading-relaxed; }
+  h1, h2, h3, h4 { @apply font-display text-ink; text-wrap: balance; }
+  :lang(hi) body { font-family: "Mukta", ui-sans-serif, sans-serif; line-height: 1.75; }
+  :lang(hi) :is(h1, h2, h3, h4) { font-family: "Mukta", "Sora", sans-serif; font-weight: 700; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-brand-600 rounded-sm; }
+  input, select, textarea { @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-ink transition focus:border-brand-600 focus:ring-3 focus:ring-brand-100 focus:outline-none; }
+  label { @apply text-sm font-semibold text-ink; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8; }
+  .section { @apply py-16 lg:py-28; }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.16em] text-brand-600; }
+  .btn-primary, .btn-outline, .btn-er, .btn-ghost-light { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 min-h-12 font-semibold transition duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none; }
+  .btn-primary { @apply bg-brand-700 text-white hover:bg-brand-800 shadow-sm shadow-brand-900/10; }
+  .btn-outline { @apply border border-brand-700/25 text-brand-700 hover:border-brand-700 hover:bg-brand-50; }
+  .btn-er { @apply bg-er-600 text-white hover:bg-er-500; }
+  .btn-ghost-light { @apply border border-white/30 text-white hover:bg-white/10; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3 py-1 text-sm font-medium text-brand-700; }
+  .card { @apply rounded-2xl bg-white border border-line; }
+  .snap-row { @apply flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0; scrollbar-width: none; }
+  .snap-row > * { @apply snap-start shrink-0; }
+  .prose-ss p { @apply mb-5 text-lg text-ink/85; }
+}
+
+/* Sections fade up as they enter, using scroll-driven animation.
+   Browsers without support simply show everything (no hidden content). */
+@keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@supports (animation-timeline: view()) {
+  .reveal { animation: fade-up linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+}
+
+@keyframes pulse-dot { 0%, 100% { box-shadow: 0 0 0 0 rgb(214 64 47 / 0.6); } 50% { box-shadow: 0 0 0 6px rgb(214 64 47 / 0); } }
+.pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+
+/* Heartbeat pulse: a 280-unit dash runs the full ECG path (~2070 units), then repeats. */
+@keyframes ecg-run { from { stroke-dashoffset: 280; } to { stroke-dashoffset: -2080; } }
+.ecg-pulse { stroke-dasharray: 280 2400; animation: ecg-run 4.5s linear infinite; opacity: .3; }
+dialog::backdrop { background: rgb(8 48 47 / 0.85); }
