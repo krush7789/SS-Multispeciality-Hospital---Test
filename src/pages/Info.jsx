@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 import { Phone, Mail, Siren, Check, Target, Eye, CalendarCheck } from 'lucide-react'
-import { hospital, leadership, whyUs, specialities, groups, photo, stock } from '../data'
+import { hospital, leadership, whyUs, specialities, groups, stock } from '../data'
 import { PageHeader, WhatsAppIcon, waLink } from '../ui'
 import { VisitCard, EmergencyBand } from './Home'
 import { useT } from '../i18n'
@@ -21,7 +21,7 @@ export function About() {
             <p>Because the doctors, lab and imaging work side by side, most patients can get tests, treatment and medicines in a single visit.</p>
           </div>
         </div>
-        <img src={photo(stock.building, 900, 1000)} alt="Hospital building (stock photo)" loading="lazy" className="aspect-[9/10] w-full rounded-[2rem] object-cover" />
+        <img src={stock.building} alt="SS Multispeciality Hospital building" loading="lazy" className="aspect-[9/10] w-full rounded-[2rem] object-cover" />
       </section>
 
       <section className="bg-brand-800 text-white">

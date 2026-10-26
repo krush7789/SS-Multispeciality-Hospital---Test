@@ -369,7 +369,6 @@ function Footer() {
       <div className="border-t border-white/10">
         <div className="container-x flex flex-wrap items-center justify-between gap-3 py-6 text-sm">
           <p>© {new Date().getFullYear()} {hospital.name}. {t('rights')}</p>
-          <p className="text-white/50">Photos, doctor profiles and reviews are placeholders.</p>
         </div>
       </div>
     </footer>

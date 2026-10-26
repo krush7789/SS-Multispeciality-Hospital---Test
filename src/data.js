@@ -1,5 +1,5 @@
-// All site content lives here. Every name, photo, number and review below is a PLACEHOLDER:
-// swap in real, verified data before launch. Nothing here is copied from any other hospital.
+// All site content lives here. Hospital name, address, phones, email and building photos are real;
+// every doctor, other photo and review below is a PLACEHOLDER: swap in verified data before launch.
 import {
   Stethoscope, HeartHandshake, Baby, Scissors, Bone, Bean, Droplets, Microscope,
   ScanLine, AudioWaveform, HeartPulse, Activity, Pill, Droplet, Ambulance,
@@ -11,10 +11,10 @@ export const hospital = {
   address: 'Near Topkhana Rd, Old Ramlila, Pranpur, Rampur, Uttar Pradesh 244901',
   landmark: 'Next to the Old Ramlila ground, off Topkhana Road',
   parking: 'Free two-wheeler and car parking inside the campus',
-  phone: '+91 00000 00000',
-  emergency: '+91 00000 00001',
-  whatsapp: '910000000000',
-  email: 'info@sshospital.example',
+  phone: '+91 82183 44961',
+  emergency: '+91 95487 30323',
+  whatsapp: '918218344961',
+  email: 'hospitalssmultispeciality@gmail.com',
   opd: 'Mon–Sat, 9:00 AM – 7:00 PM',
   mapUrl: 'https://www.google.com/maps/search/?api=1&query=' +
     encodeURIComponent('Topkhana Rd, Old Ramlila, Pranpur, Rampur, Uttar Pradesh 244901'),
@@ -28,7 +28,7 @@ export const stock = {
   hero: '1532938911079-1b06ac7ceec7',
   heroCare: '1666214277730-e9c7e755e5a3',
   reception: '1519494026892-80bbd2d6fd0d',
-  building: '1586773860418-d37222d8fce3',
+  building: '/hospital-front.jpeg', // the hospital's own photo (local, not Unsplash)
 }
 
 export const groups = [
@@ -161,7 +161,8 @@ export const gallery = [
   shot('1582719471384-894fbb16e074', 'Diagnostics', 'Pathologist at the microscope', 800),
   shot('1758691462863-9e1b8a863140', 'Patient care', 'Doctor talking with a patient', 1000),
   shot('1778151270757-f3793f65e2de', 'Wards', 'General ward with monitored beds'),
-  shot('1586773860418-d37222d8fce3', 'Building', 'Hospital building exterior', 800),
+  { src: '/hospital-front.jpeg', cat: 'Building', alt: 'SS Multispeciality Hospital front entrance' },
+  { src: '/hospital-street.jpeg', cat: 'Building', alt: 'SS Multispeciality Hospital building, street view' },
   shot('1640876777002-badf6aee5bcc', 'Operation theatre', 'Surgeons during an operation'),
   shot('1606206591513-adbfbdd7a177', 'Diagnostics', 'Blood sample tubes in the lab', 1000),
   shot('1517120026326-d87759a7b63b', 'Wards', 'Newborn incubator being moved to the NICU', 800),
