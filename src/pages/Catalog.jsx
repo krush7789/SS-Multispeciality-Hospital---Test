@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { Link, useParams } from 'react-router'
 import { ArrowRight, CalendarCheck, Check } from 'lucide-react'
 import { specialities, specialityBySlug, gallery, galleryCats, hospital } from '../data'
@@ -78,6 +79,17 @@ export function Gallery() {
   const [idx, setIdx] = useState(null)
   const list = cat === 'All' ? gallery : gallery.filter((g) => g.cat === cat)
   const move = useCallback((dir) => setIdx((i) => (i + dir + list.length) % list.length), [list.length])
+  // Thumbnail grows into the lightbox. Waits up to 300ms for the large photo so the "after" snapshot isn't blank;
+  // on a slow connection it just opens without the effect.
+  const open = async (i, el) => {
+    if (!document.startViewTransition) return setIdx(i)
+    const big = new Image()
+    big.src = list[i].full ?? list[i].src
+    const ready = await Promise.race([big.decode().then(() => true, () => false), new Promise((r) => setTimeout(r, 300, false))])
+    if (!ready) return setIdx(i)
+    el.style.viewTransitionName = 'photo'
+    document.startViewTransition(() => { el.style.viewTransitionName = ''; flushSync(() => setIdx(i)) })
+  }
   return (
     <>
       <PageHeader title={t('gallery')} intro="Our building, plus stock photos of wards and theatres until the hospital’s own photos are ready." />
@@ -90,7 +102,7 @@ export function Gallery() {
         </div>
         <div className="columns-2 gap-4 lg:columns-3 [&>*]:mb-4">
           {list.map((g, i) => (
-            <button key={g.src} onClick={() => setIdx(i)} className="group block w-full overflow-hidden rounded-2xl" aria-label={`Open ${g.alt}`}>
+            <button key={g.src} onClick={(e) => open(i, e.currentTarget.firstChild)} className="group block w-full overflow-hidden rounded-2xl" aria-label={`Open ${g.alt}`}>
               <img src={g.src} alt={g.alt} loading="lazy" className="w-full transition duration-500 group-hover:scale-[1.03]" />
             </button>
           ))}

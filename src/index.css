@@ -38,7 +38,10 @@
 @layer components {
   .container-x { @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8; }
   .section { @apply py-16 lg:py-28; }
-  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.16em] text-brand-600; }
+  /* Short gold bar under each eyebrow; draws in on scroll (see .eyebrow animation below). */
+  .eyebrow { @apply w-fit pb-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-600;
+    background: linear-gradient(var(--color-gold-500), var(--color-gold-500)) no-repeat left bottom / 1.75rem 2px; }
+  .text-center .eyebrow { @apply mx-auto; background-position: center bottom; }
   .btn-primary, .btn-outline, .btn-er, .btn-ghost-light { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 min-h-12 font-semibold transition duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none; }
   .btn-primary { @apply bg-brand-700 text-white hover:bg-brand-800 shadow-sm shadow-brand-900/10; }
   .btn-outline { @apply border border-brand-700/25 text-brand-700 hover:border-brand-700 hover:bg-brand-50; }
@@ -56,7 +59,38 @@
 @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 @supports (animation-timeline: view()) {
   .reveal { animation: fade-up linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+  .eyebrow { animation: draw-x linear both; animation-timeline: view(); animation-range: entry 60% cover 35%; }
+  /* Hero photo zooms in gently as the page scrolls away from it. */
+  .hero-zoom { animation: hero-zoom linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+  /* Gold line joining the TPA steps grows as the list scrolls through view. */
+  .steps-line { view-timeline: --steps block; }
+  .steps-line::before { animation: grow-y linear both; animation-timeline: --steps; animation-range: entry 60% cover 55%; }
 }
+@keyframes draw-x { from { background-size: 0 2px; } }
+@keyframes hero-zoom { to { transform: scale(1.1) translateY(3%); } }
+@keyframes grow-y { from { transform: scaleY(0); } }
+/* Line sits at the centre of the 40px number circles (1px border + 24px padding + 20px). */
+.steps-line::before { content: ''; position: absolute; left: 2.75rem; top: 2.75rem; bottom: 2.75rem; width: 2px; background: var(--color-gold-400); transform-origin: top; }
+
+/* Hero heading: words rise in one after another on load. */
+.word-in { display: inline-block; animation: fade-up .7s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i) * 70ms + 100ms); }
+/* Route change (class set by AppRoutes in main.jsx): the old page fades out quickly, the new one fades in
+   with a slight rise. Header and floating buttons get their own names so they hold still instead of fading. */
+html.vt-page header { view-transition-name: site-header; }
+html.vt-page .wa-pulse { view-transition-name: wa-button; }
+html.vt-page nav[aria-label="Quick actions"] { view-transition-name: quick-bar; }
+html.vt-page::view-transition-old(root) { animation: vt-out .25s cubic-bezier(.4, 0, 1, 1) both; }
+html.vt-page::view-transition-new(root) { animation: vt-in .55s cubic-bezier(.2, .7, .2, 1) .12s both; }
+html.vt-page::view-transition-group(site-header) { animation-duration: .5s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(14px); } }
+
+/* WhatsApp button: one soft ring every 6s rather than constant motion. */
+@keyframes wa-ring { 0%, 60% { box-shadow: 0 0 0 0 rgb(37 211 102 / .55); } 85%, 100% { box-shadow: 0 0 0 16px rgb(37 211 102 / 0); } }
+.wa-pulse::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; animation: wa-ring 6s ease-out infinite; }
+
+/* Gallery thumbnail grows into the lightbox photo (View Transitions API, see Gallery). */
+::view-transition-group(photo) { animation-duration: .45s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
 
 @keyframes pulse-dot { 0%, 100% { box-shadow: 0 0 0 0 rgb(214 64 47 / 0.6); } 50% { box-shadow: 0 0 0 6px rgb(214 64 47 / 0); } }
 .pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }

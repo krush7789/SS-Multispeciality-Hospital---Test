@@ -77,10 +77,10 @@ export function Tpa() {
         <div>
           <p className="eyebrow mb-3">Cashless treatment</p>
           <h2 className="mb-8 text-3xl font-semibold tracking-tight sm:text-4xl">How it works</h2>
-          <ol className="grid gap-4">
+          <ol className="steps-line relative grid gap-4">
             {tpa.cashless.map(([h, p], i) => (
               <li key={h} className="flex gap-5 rounded-2xl border border-line p-6">
-                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-brand-50 font-display font-semibold text-brand-700">{i + 1}</span>
+                <span className="relative grid size-10 shrink-0 place-items-center rounded-full bg-brand-50 font-display font-semibold text-brand-700">{i + 1}</span>
                 <span><span className="block text-lg font-semibold">{h}</span><span className="mt-1 block text-muted">{p}</span></span>
               </li>
             ))}

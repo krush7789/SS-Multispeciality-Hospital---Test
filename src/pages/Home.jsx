@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Link } from 'react-router'
 import {
   CalendarCheck, Siren, LayoutGrid, ShieldCheck, ArrowRight, Ambulance, BedDouble, Baby, Check,
@@ -17,7 +17,7 @@ export function Hero() {
         <div>
           <p className="eyebrow mb-5">{t('heroEyebrow')}</p>
           <h1 className="text-[2.6rem] font-bold leading-[1.08] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-            {t('heroTitle')}
+            {t('heroTitle').split(' ').map((w, i) => <Fragment key={i}>{i > 0 && ' '}<span className="word-in" style={{ '--i': i }}>{w}</span></Fragment>)}
           </h1>
           {/* The heartbeat gets its own row in the layout, so text flows around it and can never sit under it.
               It bleeds to both screen edges and passes behind the photo (z-10); the section's overflow-hidden clips it. */}
@@ -37,8 +37,10 @@ export function Hero() {
         </div>
 
         <div className="relative z-10">
-          <img src={own.front} alt="SS Multispeciality Hospital building with its Emergency 24×7 entrance" fetchPriority="high"
-            className="aspect-[10/11] w-full rounded-[2rem] object-cover object-top shadow-2xl shadow-brand-900/15" />
+          <div className="overflow-hidden rounded-[2rem] shadow-2xl shadow-brand-900/15">
+            <img src={own.front} alt="SS Multispeciality Hospital building with its Emergency 24×7 entrance" fetchPriority="high"
+              className="hero-zoom aspect-[10/11] w-full object-cover object-top" />
+          </div>
           <div className="absolute -bottom-6 left-4 flex items-center gap-3 rounded-2xl bg-white p-4 pr-6 shadow-xl shadow-brand-900/15 sm:-left-8">
             <span className="grid size-12 place-items-center rounded-full bg-er-600/10 text-er-600"><Ambulance className="size-6" /></span>
             <span>
@@ -243,7 +245,7 @@ function Reviews() {
             <figure key={r.name} className="w-[85%] sm:w-[calc(50%-10px)]">
               <Quote className="size-10 text-brand-200" fill="currentColor" strokeWidth={0} />
               <blockquote className="mt-4 text-lg leading-relaxed text-ink sm:text-xl">{r.text}</blockquote>
-              <figcaption className="mt-6"><span className="font-semibold">{r.name}</span> <span className="text-muted">· {r.place} · sample</span></figcaption>
+              <figcaption className="mt-6"><span className="font-semibold">{r.name}</span> <span className="text-muted">· {r.place} </span></figcaption>
             </figure>
           ))}
         </Carousel>

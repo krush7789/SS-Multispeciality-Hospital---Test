@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
 import {
   Phone, CalendarCheck, Menu, X, ChevronDown, ChevronLeft, ChevronRight,
@@ -80,7 +80,7 @@ export function SpecialityCard({ s }) {
   return (
     <Link to={`/specialities/${s.slug}`}
       className="group flex flex-col gap-4 rounded-2xl p-6 transition duration-200 hover:-translate-y-1 hover:bg-white hover:shadow-xl hover:shadow-brand-900/8">
-      <IconBadge icon={s.icon} className="group-hover:bg-brand-700 group-hover:text-white" />
+      <IconBadge icon={s.icon} className="group-hover:scale-110 group-hover:bg-brand-700 group-hover:text-white" />
       <div>
         <h3 className="text-lg font-semibold">{s.name}</h3>
         <p className="mt-1.5 text-base leading-relaxed text-muted line-clamp-2">{s.summary}</p>
@@ -149,7 +149,8 @@ export function Faq({ items }) {
 
 export function Lightbox({ images, index, onClose, onMove }) {
   const ref = useRef(null)
-  useEffect(() => {
+  // Layout effect: the dialog must be open by the time a view transition takes its "after" snapshot.
+  useLayoutEffect(() => {
     const d = ref.current
     if (index == null) { d?.open && d.close(); return }
     if (!d.open) d.showModal()
@@ -163,7 +164,7 @@ export function Lightbox({ images, index, onClose, onMove }) {
       className="m-auto max-h-[92vh] max-w-[min(1100px,94vw)] bg-transparent p-0 text-white">
       {img && (
         <figure className="relative">
-          <img src={img.full ?? img.src} alt={img.alt} className="max-h-[82vh] w-auto rounded-xl" />
+          <img src={img.full ?? img.src} alt={img.alt} className="max-h-[82vh] w-auto rounded-xl" style={{ viewTransitionName: 'photo' }} />
           <figcaption className="mt-3 flex items-center justify-between gap-4 text-sm text-white/80">
             <span>{img.alt} · {index + 1} / {images.length}</span>
             <span className="flex gap-2">
@@ -214,7 +215,7 @@ function UtilityBar() {
 }
 
 const navCls = ({ isActive }) =>
-  `relative py-2 text-base font-medium transition hover:text-brand-700 ${isActive ? 'text-brand-700' : 'text-ink'}`
+  `relative whitespace-nowrap py-2 text-base font-medium transition hover:text-brand-700 ${isActive ? 'text-brand-700' : 'text-ink'}`
 
 function Dropdown({ label, to, children }) {
   return (
@@ -241,16 +242,17 @@ function Header() {
   return (
     <>
     <header className="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-md">
-      <div className="container-x flex h-[72px] items-center justify-between gap-6">
-        <Link to="/" className="flex items-center gap-3" aria-label={`${hospital.name}, home`}>
+      <div className="container-x flex h-[72px] items-center justify-between gap-3 sm:gap-6">
+        <Link to="/" className="flex shrink-0 items-center gap-3" aria-label={`${hospital.name}, home`}>
           <img src="/favicon.svg" alt="" className="size-10" />
-          <span className="leading-tight">
-            <span className="block font-display text-lg font-bold tracking-tight text-brand-800">SS Multispeciality</span>
+          <span className="whitespace-nowrap leading-tight">
+            <span className="block font-display text-base font-bold tracking-tight text-brand-800 min-[360px]:text-lg">SS Multispeciality</span>
             <span className="block text-xs font-semibold uppercase tracking-[0.22em] text-muted">Hospital · Rampur</span>
           </span>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">
+        {/* Full menu only from xl (1280px): below that the links plus "Request Appointment" don't fit on one line. */}
+        <nav aria-label="Main" className="hidden items-center gap-6 xl:flex">
           <NavLink to="/" end className={navCls}>{t('home')}</NavLink>
           <NavLink to="/about" className={navCls}>{t('about')}</NavLink>
           <Dropdown label={t('specialities')} to="/specialities">
@@ -266,8 +268,8 @@ function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link to="/book" className="btn-primary hidden !min-h-11 !px-5 sm:inline-flex"><CalendarCheck className="size-4" /> {t('book')}</Link>
-          <button onClick={() => setOpen(true)} className="grid size-11 place-items-center rounded-full hover:bg-brand-50 lg:hidden" aria-label={t('menu')} aria-expanded={open}>
+          <Link to="/book" className="btn-primary hidden whitespace-nowrap leading-tight !min-h-11 !px-5 sm:inline-flex"><CalendarCheck className="size-4" /> {t('book')}</Link>
+          <button onClick={() => setOpen(true)} className="grid size-11 place-items-center rounded-full hover:bg-brand-50 xl:hidden" aria-label={t('menu')} aria-expanded={open}>
             <Menu className="size-6" />
           </button>
         </div>
@@ -275,7 +277,7 @@ function Header() {
     </header>
 
       {/* mobile drawer: kept outside <header>, whose backdrop-filter would trap position:fixed */}
-      <div className={`fixed inset-0 z-[55] overflow-hidden lg:hidden ${open ? '' : 'pointer-events-none'}`}>
+      <div className={`fixed inset-0 z-[55] overflow-hidden xl:hidden ${open ? '' : 'pointer-events-none'}`}>
         <div onClick={() => setOpen(false)} className={`absolute inset-0 bg-brand-900/50 transition ${open ? 'opacity-100' : 'opacity-0'}`} />
         <aside className={`absolute right-0 top-0 flex h-dvh w-[86%] max-w-sm flex-col overflow-y-auto bg-white p-6 shadow-2xl transition duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}
           aria-hidden={!open} inert={!open}>
@@ -303,7 +305,7 @@ function Footer() {
   const { t } = useT()
   return (
     <footer className="bg-brand-900 pb-24 text-white/75 lg:pb-0">
-      <div className="container-x grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.4fr] lg:py-20">
+      <div className="container-x grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.4fr] lg:py-20 [&>*]:min-w-0">
         <div>
           <div className="flex items-center gap-3">
             <img src="/favicon.svg" alt="" className="size-10" />
@@ -335,7 +337,7 @@ function Footer() {
           <ul className="space-y-4">
             <li className="flex gap-3"><MapPin className="mt-1 size-5 shrink-0 text-gold-400" /><span>{hospital.address}</span></li>
             <li className="flex gap-3"><Phone className="mt-1 size-5 shrink-0 text-gold-400" /><span><a href={tel(hospital.phone)} className="hover:text-white">{hospital.phone}</a><br /><span className="text-sm">{t('emergency')}: {hospital.emergency}</span></span></li>
-            <li className="flex gap-3"><Mail className="mt-1 size-5 shrink-0 text-gold-400" /><a href={`mailto:${hospital.email}`} className="hover:text-white">{hospital.email}</a></li>
+            <li className="flex gap-3"><Mail className="mt-1 size-5 shrink-0 text-gold-400" /><a href={`mailto:${hospital.email}`} className="min-w-0 wrap-anywhere hover:text-white">{hospital.email}</a></li>
           </ul>
           <a href={hospital.mapUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-1 font-semibold text-gold-400 hover:underline">{t('directions')} <ArrowRight className="size-4" /></a>
         </div>
@@ -372,7 +374,7 @@ function Floating() {
         <Link to="/book" className="flex min-h-14 flex-col items-center justify-center gap-0.5 bg-brand-700 text-xs font-semibold text-white"><CalendarCheck className="size-5" />{t('book')}</Link>
       </nav>
       <a href={waLink()} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp"
-        className="fixed bottom-6 right-6 z-40 hidden size-14 place-items-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/15 transition hover:scale-105 lg:grid">
+        className="wa-pulse fixed bottom-6 right-6 z-40 hidden size-14 place-items-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/15 transition hover:scale-105 lg:grid">
         <WhatsAppIcon className="size-7" />
       </a>
       <button onClick={() => scrollTo({ top: 0 })} aria-label="Back to top"
@@ -385,7 +387,8 @@ function Floating() {
 
 export function Layout() {
   const { pathname } = useLocation()
-  useEffect(() => { scrollTo({ top: 0, behavior: 'instant' }) }, [pathname])
+  // Layout effect: scroll before the View Transition takes its "after" snapshot, so the jump is hidden in the fade.
+  useLayoutEffect(() => { scrollTo({ top: 0, behavior: 'instant' }) }, [pathname])
   return (
     <>
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2">Skip to content</a>
