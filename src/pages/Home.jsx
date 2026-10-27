@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import {
-  CalendarCheck, Siren, Search, FileText, ArrowRight, Ambulance, Droplet, Microscope, Pill,
-  Quote, MapPin, Clock, Car, Landmark, Award, Building2, Wallet, Users,
+  CalendarCheck, Siren, LayoutGrid, ShieldCheck, ArrowRight, Ambulance, BedDouble, Baby, Check,
+  Quote, MapPin, Clock, Car, Landmark, Award, Scissors, Users,
 } from 'lucide-react'
-import { hospital, specialities, doctors, testimonials, gallery, whyUs, faqs, photo, stock } from '../data'
+import { hospital, specialities, criticalCare, tpa, testimonials, gallery, whyUs, faqs, photo, stock, own } from '../data'
 import { useT } from '../i18n'
-import { SectionHead, SpecialityCard, DoctorCard, Counter, Carousel, Faq, Sent, Heartbeat, WhatsAppIcon, waLink } from '../ui'
+import { SectionHead, SpecialityCard, Counter, Carousel, Faq, Sent, Heartbeat, WhatsAppIcon, waLink } from '../ui'
 
 export function Hero() {
   const { t } = useT()
@@ -30,15 +30,15 @@ export function Hero() {
             <a href={`tel:${hospital.emergency.replace(/\s/g, '')}`} className="btn-outline !border-er-600/30 !text-er-600 hover:!bg-er-600/5 hover:!border-er-600"><Siren className="size-5" /> {t('emergency')}</a>
           </div>
           <ul className="mt-10 flex flex-wrap gap-2.5">
-            {[[Ambulance, '24×7 Emergency'], [Microscope, 'In-house Lab'], [Pill, '24×7 Pharmacy'], [Droplet, 'Blood Bank']].map(([I, l]) => (
+            {[[Ambulance, '24×7 Emergency'], [BedDouble, 'ICU'], [Baby, 'NCU'], [ShieldCheck, 'TPA / Insurance desk']].map(([I, l]) => (
               <li key={l} className="chip bg-white shadow-sm shadow-brand-900/5"><I className="size-4" strokeWidth={1.75} /> {l}</li>
             ))}
           </ul>
         </div>
 
         <div className="relative z-10">
-          <img src={photo(stock.heroCare, 1000, 1100)} alt="Doctor talking with a patient (stock photo)" fetchPriority="high"
-            className="aspect-[10/11] w-full rounded-[2rem] object-cover shadow-2xl shadow-brand-900/15" />
+          <img src={own.front} alt="SS Multispeciality Hospital building with its Emergency 24×7 entrance" fetchPriority="high"
+            className="aspect-[10/11] w-full rounded-[2rem] object-cover object-top shadow-2xl shadow-brand-900/15" />
           <div className="absolute -bottom-6 left-4 flex items-center gap-3 rounded-2xl bg-white p-4 pr-6 shadow-xl shadow-brand-900/15 sm:-left-8">
             <span className="grid size-12 place-items-center rounded-full bg-er-600/10 text-er-600"><Ambulance className="size-6" /></span>
             <span>
@@ -55,9 +55,9 @@ function QuickActions() {
   const { t } = useT()
   const items = [
     [CalendarCheck, t('book'), 'Send a request on WhatsApp', '/book'],
-    [Search, t('findDoctor'), 'Search by name or department', '/doctors'],
+    [LayoutGrid, t('specialities'), 'Our six specialist departments', '/specialities'],
     [Siren, t('emergency'), 'Call our 24×7 emergency line', `tel:${hospital.emergency.replace(/\s/g, '')}`],
-    [FileText, t('labReports'), 'Ask about reports on WhatsApp', waLink('Hello, I would like to receive my lab report.')],
+    [ShieldCheck, t('tpa'), 'Cashless and reimbursement help', '/tpa'],
   ]
   return (
     <section className="container-x relative z-10 -mt-14">
@@ -79,12 +79,11 @@ function QuickActions() {
   )
 }
 
-// Only figures the site itself can back up: counted from data.js, never typed in.
-// Add patient counts, beds or ratings here once the hospital supplies verified numbers.
+// Only facts the hospital has confirmed. Add patient counts, beds or ratings once verified numbers exist.
 const facts = [
-  { value: specialities.filter((s) => s.group === 'clinical').length, label: 'Clinical departments' },
-  { value: specialities.filter((s) => s.group === 'diagnostics').length, label: 'In-house diagnostic services' },
-  { value: doctors.length, label: 'Specialist doctors' },
+  { value: specialities.length, label: 'Specialist departments' },
+  { value: '24×7', label: 'Emergency care' },
+  ...criticalCare.map((u) => ({ value: u.name, label: u.full })),
 ]
 
 function Stats() {
@@ -93,14 +92,12 @@ function Stats() {
       <dl className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4 lg:gap-x-8 [&>*]:min-w-0">
         {facts.map((s) => (
           <div key={s.label} className="reveal border-l-2 border-brand-100 pl-5">
-            <dd className="font-display text-[clamp(1.9rem,3.2vw,2.75rem)] font-bold leading-tight text-brand-700"><Counter value={s.value} /></dd>
+            <dd className="font-display text-[clamp(1.9rem,3.2vw,2.75rem)] font-bold leading-tight text-brand-700">
+              {typeof s.value === 'number' ? <Counter value={s.value} /> : s.value}
+            </dd>
             <dt className="mt-1 text-muted">{s.label}</dt>
           </div>
         ))}
-        <div className="reveal border-l-2 border-brand-100 pl-5">
-          <dd className="font-display text-[clamp(1.9rem,3.2vw,2.75rem)] font-bold leading-tight text-brand-700">24×7</dd>
-          <dt className="mt-1 text-muted">Emergency care</dt>
-        </div>
       </dl>
     </section>
   )
@@ -115,15 +112,15 @@ function About() {
           <img src={photo(stock.reception, 900, 700)} alt="Hospital reception area (stock photo)" loading="lazy" className="aspect-[9/7] w-full rounded-[2rem] object-cover" />
           <div className="absolute -bottom-8 right-6 rounded-2xl bg-brand-700 p-6 text-white shadow-xl sm:right-10">
             <p className="font-display text-4xl font-bold">{specialities.length}</p>
-            <p className="text-sm text-white/80">services under one roof</p>
+            <p className="text-sm text-white/80">specialist departments</p>
           </div>
         </div>
         <div className="reveal">
           <p className="eyebrow mb-3">{t('about')}</p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[2.75rem] lg:leading-[1.15]">A neighbourhood hospital with specialist depth</h2>
-          <p className="mt-5 text-lg text-muted">Families come to us for deliveries, surgeries, dialysis and everyday illness. Specialists, the lab, imaging, pharmacy and blood bank work in the same building near Old Ramlila, so most visits need only one trip.</p>
+          <p className="mt-5 text-lg text-muted">Families come to us for deliveries, surgeries, fractures and everyday illness. Six specialist departments work alongside an ICU, an NCU and a 24×7 emergency near Old Ramlila, so patients who need closer care stay in one place.</p>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-            {[[Award, 'Qualified specialists'], [Building2, 'Operation theatres & NICU'], [Wallet, 'In-house pharmacy'], [Users, 'Caring nursing staff']].map(([I, l]) => (
+            {[[Award, 'Qualified specialists'], [Scissors, 'Operation theatre'], [BedDouble, 'ICU & NCU'], [Users, 'Caring nursing staff']].map(([I, l]) => (
               <li key={l} className="flex items-center gap-3 font-medium"><I className="size-5 text-gold-600" /> {l}</li>
             ))}
           </ul>
@@ -140,10 +137,9 @@ function Specialities() {
     <section className="section bg-soft">
       <div className="container-x">
         <SectionHead eyebrow={t('specialities')} title={t('secSpecialities')}
-          text="From your first pregnancy check-up to joint replacement, our departments work together so you get the right care in one place."
-          action={<Link to="/specialities" className="btn-outline">{t('viewAll')} 15 <ArrowRight className="size-4" /></Link>} />
-        <div className="reveal grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-          {specialities.filter((s) => s.group === 'clinical').concat(specialities.find((s) => s.slug === 'pathology-lab')).map((s) => <SpecialityCard key={s.slug} s={s} />)}
+          text="From pregnancy care to fracture treatment, our departments work together so you get the right care in one place." />
+        <div className="reveal grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {specialities.map((s) => <SpecialityCard key={s.slug} s={s} />)}
         </div>
       </div>
     </section>
@@ -172,44 +168,59 @@ function WhyUs() {
   )
 }
 
-function Diagnostics() {
+export function CriticalCare() {
   const { t } = useT()
-  const list = specialities.filter((s) => s.group !== 'clinical')
   return (
-    <section className="bg-brand-800 py-16 text-white lg:py-20">
+    <section className="bg-brand-800 py-16 text-white lg:py-24">
       <div className="container-x">
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-gold-400">{t('facilities')}</p>
-            <h2 className="text-3xl font-semibold tracking-tight !text-white sm:text-4xl">{t('secFacilities')}</h2>
-          </div>
-          <Link to="/specialities" className="btn-ghost-light">{t('viewAll')} <ArrowRight className="size-4" /></Link>
+        <div className="mb-10 max-w-2xl lg:mb-14">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-gold-400">{t('criticalCare')}</p>
+          <h2 className="text-3xl font-semibold tracking-tight !text-white sm:text-4xl">{t('secCritical')}</h2>
+          <p className="mt-4 text-lg text-white/75">When a patient needs more than a ward bed, they are cared for here, without a transfer to another city.</p>
         </div>
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-8 [&>*]:min-w-0">
-          {list.map((s) => (
-            <li key={s.slug}>
-              <Link to={`/specialities/${s.slug}`} className="flex h-full flex-col items-start gap-4 rounded-2xl border border-white/10 p-5 transition hover:border-white/30 hover:bg-white/5">
-                <s.icon className="size-7 text-gold-400" strokeWidth={1.5} />
-                <span className="text-base font-medium leading-snug">{s.name}</span>
-              </Link>
-            </li>
+        <div className="grid gap-5 lg:grid-cols-2">
+          {criticalCare.map((u) => (
+            <article key={u.id} className="reveal rounded-3xl border border-white/10 bg-white/5 p-8 lg:p-10">
+              <div className="flex items-center gap-4">
+                <span className="grid size-14 shrink-0 place-items-center rounded-full bg-gold-400/15 text-gold-400"><u.icon className="size-7" strokeWidth={1.5} /></span>
+                <h3 className="!text-white"><span className="block font-display text-3xl font-bold">{u.name}</span><span className="text-base font-medium text-white/70">{u.full}</span></h3>
+              </div>
+              <p className="mt-6 text-lg text-white/85">{u.text}</p>
+              <ul className="mt-6 grid gap-3">
+                {u.points.map((p) => <li key={p} className="flex gap-3 text-white/85"><Check className="mt-1 size-5 shrink-0 text-gold-400" />{p}</li>)}
+              </ul>
+            </article>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   )
 }
 
-function Doctors() {
+function TpaTeaser() {
   const { t } = useT()
   return (
-    <section className="section">
-      <div className="container-x">
-        <SectionHead eyebrow={t('doctors')} title={t('secDoctors')} text="Experienced doctors with fixed OPD days, so you can plan your visit."
-          action={<Link to="/doctors" className="btn-outline">{t('viewAll')} <ArrowRight className="size-4" /></Link>} />
-        <Carousel label="Doctors">
-          {doctors.map((d) => <div key={d.slug} className="w-[72%] sm:w-[calc(50%-10px)] lg:w-[calc(25%-15px)]"><DoctorCard d={d} /></div>)}
-        </Carousel>
+    <section className="section bg-soft">
+      <div className="container-x grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20 [&>*]:min-w-0">
+        <div>
+          <SectionHead eyebrow={t('tpa')} title={t('secTpa')}
+            text="Have health insurance? Our TPA (Third-Party Administrator) desk deals with your insurer, so you can focus on getting better." />
+          <div className="-mt-4 flex flex-wrap gap-3">
+            <Link to="/tpa" className="btn-primary"><ShieldCheck className="size-5" /> {t('knowMore')}</Link>
+            <a href={waLink('Hello, I would like to check whether my health insurance is accepted. Insurer: ')} target="_blank" rel="noreferrer" className="btn-outline">
+              <WhatsAppIcon className="size-5 text-[#25D366]" /> Check my insurance
+            </a>
+          </div>
+        </div>
+        <ol className="grid gap-px overflow-hidden rounded-3xl bg-line sm:grid-cols-2">
+          {tpa.cashless.map(([h, p], i) => (
+            <li key={h} className="reveal bg-white p-7">
+              <span className="font-display text-sm font-semibold text-gold-600">Step {i + 1}</span>
+              <h3 className="mt-2 text-xl font-semibold">{h}</h3>
+              <p className="mt-2 text-muted">{p}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   )
@@ -262,13 +273,11 @@ function GalleryPreview() {
 
 // There is no backend or database, so this form books nothing and checks no availability.
 // It writes a WhatsApp message to the front desk; staff reply to confirm a real time by hand.
-export function AppointmentForm({ initialDept = '', initialDoctor = '' }) {
+export function AppointmentForm({ initialDept = '' }) {
   const { t } = useT()
   const [sent, setSent] = useState(false)
-  const [dept, setDept] = useState(initialDept)
   if (sent) return <Sent>{t('callbackDone')}</Sent>
   const today = new Date().toISOString().slice(0, 10)
-  const deptDocs = doctors.filter((d) => d.dept === dept)
   return (
     <form onSubmit={(e) => {
       e.preventDefault()
@@ -278,7 +287,6 @@ export function AppointmentForm({ initialDept = '', initialDoctor = '' }) {
         `Name: ${v.name}`,
         `Mobile: ${v.phone}`,
         `Department: ${specialities.find((s) => s.slug === v.dept)?.name}`,
-        v.doctor && `Preferred doctor: ${doctors.find((d) => d.slug === v.doctor)?.name}`,
         v.date && `Preferred date: ${new Date(v.date + 'T00:00').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' })}`,
       ]
       window.open(waLink(lines.filter(Boolean).join('\n')), '_blank', 'noopener')
@@ -287,14 +295,10 @@ export function AppointmentForm({ initialDept = '', initialDoctor = '' }) {
       <div className="grid gap-1.5"><label htmlFor="ap-name">{t('name')}</label><input id="ap-name" name="name" required minLength={2} autoComplete="name" /></div>
       <div className="grid gap-1.5"><label htmlFor="ap-phone">{t('phone')}</label><input id="ap-phone" name="phone" type="tel" required pattern="[6-9][0-9]{9}" inputMode="numeric" maxLength={10} placeholder="10-digit number" title="Enter a valid 10-digit Indian mobile number" autoComplete="tel-national" /></div>
       <div className="grid gap-1.5"><label htmlFor="ap-dept">{t('dept')}</label>
-        <select id="ap-dept" name="dept" required value={dept} onChange={(e) => setDept(e.target.value)}>
+        <select id="ap-dept" name="dept" required defaultValue={specialities.some((s) => s.slug === initialDept) ? initialDept : ''}>
           <option value="" disabled>Select department</option>{specialities.map((s) => <option key={s.slug} value={s.slug}>{s.name}</option>)}
         </select></div>
-      <div className="grid gap-1.5"><label htmlFor="ap-doctor">Preferred doctor <span className="font-normal text-muted">(optional)</span></label>
-        <select id="ap-doctor" name="doctor" key={dept} defaultValue={deptDocs.some((d) => d.slug === initialDoctor) ? initialDoctor : ''} disabled={!deptDocs.length}>
-          <option value="">{deptDocs.length ? 'Any doctor' : 'No specific doctor'}</option>{deptDocs.map((d) => <option key={d.slug} value={d.slug}>{d.name}</option>)}
-        </select></div>
-      <div className="grid gap-1.5 sm:col-span-2"><label htmlFor="ap-date">{t('date')} <span className="font-normal text-muted">(optional)</span></label><input id="ap-date" name="date" type="date" min={today} /></div>
+      <div className="grid gap-1.5"><label htmlFor="ap-date">{t('date')} <span className="font-normal text-muted">(optional)</span></label><input id="ap-date" name="date" type="date" min={today} /></div>
       <button className="btn-primary sm:col-span-2 sm:justify-self-start"><WhatsAppIcon className="size-5" /> {t('submit')}</button>
       <p className="text-sm text-muted sm:col-span-2">This sends a WhatsApp message to our front desk. <b className="font-semibold text-ink">Your appointment is confirmed only when they reply.</b> This website does not store your details.</p>
     </form>
@@ -377,9 +381,9 @@ export default function Home() {
       <Stats />
       <About />
       <Specialities />
+      <CriticalCare />
       <WhyUs />
-      <Diagnostics />
-      <Doctors />
+      <TpaTeaser />
       <Reviews />
       <GalleryPreview />
       <Callback />

@@ -4,7 +4,7 @@ import {
   Phone, CalendarCheck, Menu, X, ChevronDown, ChevronLeft, ChevronRight,
   MapPin, Clock, Mail, ArrowUp, ArrowRight, Languages, Siren,
 } from 'lucide-react'
-import { hospital, specialities, groups, specialityBySlug } from './data'
+import { hospital, specialities } from './data'
 import { useT } from './i18n'
 
 const tel = (n) => `tel:${n.replace(/\s/g, '')}`
@@ -89,25 +89,6 @@ export function SpecialityCard({ s }) {
         Learn more <ArrowRight className="size-4 transition group-hover:translate-x-1" />
       </span>
     </Link>
-  )
-}
-
-export function DoctorCard({ d }) {
-  const dept = specialityBySlug[d.dept]
-  return (
-    <article className="group flex w-full flex-col">
-      <Link to={`/doctors/${d.slug}`} className="relative block overflow-hidden rounded-2xl bg-brand-100">
-        <img src={d.photo} alt={`Portrait of ${d.name} (placeholder)`} loading="lazy"
-          className="aspect-[4/5] w-full object-cover transition duration-500 group-hover:scale-[1.03]" />      </Link>
-      <div className="pt-4">
-        <p className="text-sm font-semibold text-brand-600">{dept?.name}</p>
-        <h3 className="mt-0.5 text-lg font-semibold"><Link to={`/doctors/${d.slug}`} className="hover:text-brand-700">{d.name}</Link></h3>
-        <p className="text-sm text-muted">{d.qual} · {d.exp} yrs</p>
-        <Link to={`/book?doctor=${d.slug}`} className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand-700 hover:underline">
-          Request visit <ArrowRight className="size-4" />
-        </Link>
-      </div>
-    </article>
   )
 }
 
@@ -235,13 +216,13 @@ function UtilityBar() {
 const navCls = ({ isActive }) =>
   `relative py-2 text-base font-medium transition hover:text-brand-700 ${isActive ? 'text-brand-700' : 'text-ink'}`
 
-function Dropdown({ label, to, children, wide }) {
+function Dropdown({ label, to, children }) {
   return (
     <div className="group relative">
       <NavLink to={to} className={(s) => `${navCls(s)} inline-flex items-center gap-1`}>
         {label} <ChevronDown className="size-4 transition group-hover:rotate-180 group-focus-within:rotate-180" />
       </NavLink>
-      <div className={`invisible absolute left-1/2 top-full z-40 -translate-x-1/2 pt-4 opacity-0 transition duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 ${wide ? 'w-[720px]' : 'w-60'}`}>
+      <div className={`invisible absolute left-1/2 top-full z-40 -translate-x-1/2 pt-4 opacity-0 transition duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 w-80`}>
         <div className="rounded-2xl border border-line bg-white p-3 shadow-2xl shadow-brand-900/10">{children}</div>
       </div>
     </div>
@@ -272,21 +253,14 @@ function Header() {
         <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">
           <NavLink to="/" end className={navCls}>{t('home')}</NavLink>
           <NavLink to="/about" className={navCls}>{t('about')}</NavLink>
-          <Dropdown label={t('specialities')} to="/specialities" wide>
-            <div className="grid grid-cols-3 gap-2">
-              {groups.map((g) => (
-                <div key={g.id}>
-                  <p className="eyebrow px-3 pb-1 pt-2">{g.label}</p>
-                  {specialities.filter((s) => s.group === g.id).map((s) => (
-                    <Link key={s.slug} to={`/specialities/${s.slug}`} className={`${dropItem} flex items-center gap-2`}>
-                      <s.icon className="size-4 text-brand-600" strokeWidth={1.75} /> {s.name}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-            </div>
+          <Dropdown label={t('specialities')} to="/specialities">
+            {specialities.map((s) => (
+              <Link key={s.slug} to={`/specialities/${s.slug}`} className={`${dropItem} flex items-center gap-2`}>
+                <s.icon className="size-4 shrink-0 text-brand-600" strokeWidth={1.75} /> {s.name}
+              </Link>
+            ))}
           </Dropdown>
-          <NavLink to="/doctors" className={navCls}>{t('doctors')}</NavLink>
+          <NavLink to="/tpa" className={navCls}>{t('tpa')}</NavLink>
           <NavLink to="/gallery" className={navCls}>{t('gallery')}</NavLink>
           <NavLink to="/contact" className={navCls}>{t('contact')}</NavLink>
         </nav>
@@ -310,7 +284,7 @@ function Header() {
             <button onClick={() => setOpen(false)} className="grid size-11 place-items-center rounded-full hover:bg-brand-50" aria-label={t('close')}><X className="size-6" /></button>
           </div>
           <nav className="flex flex-col text-lg" aria-label="Mobile">
-            {[['/', 'home'], ['/about', 'about'], ['/specialities', 'specialities'], ['/doctors', 'doctors'],
+            {[['/', 'home'], ['/about', 'about'], ['/specialities', 'specialities'], ['/tpa', 'tpa'],
               ['/gallery', 'gallery'], ['/contact', 'contact']].map(([to, k]) => (
               <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => `border-b border-line py-3.5 font-medium ${isActive ? 'text-brand-700' : ''}`}>{t(k)}</NavLink>
             ))}
@@ -335,7 +309,7 @@ function Footer() {
             <img src="/favicon.svg" alt="" className="size-10" />
             <span className="font-display text-lg font-bold text-white">{hospital.name}</span>
           </div>
-          <p className="mt-4 max-w-xs">Specialist care, diagnostics and a 24×7 emergency, close to home in Rampur.</p>
+          <p className="mt-4 max-w-xs">Six specialist departments, ICU, NCU and a 24×7 emergency, close to home in Rampur.</p>
           <div className="mt-6 flex gap-3">
             {[[Fb, 'Facebook', hospital.socials.facebook], [Ig, 'Instagram', hospital.socials.instagram], [Yt, 'YouTube', hospital.socials.youtube]].map(([I, l, h]) => (
               <a key={l} href={h} aria-label={l} className="grid size-10 place-items-center rounded-full border border-white/20 text-white transition hover:bg-white hover:text-brand-900"><I className="size-4" /></a>
@@ -345,7 +319,7 @@ function Footer() {
         <div>
           <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.14em] text-white">{t('quickLinks')}</h3>
           <ul className="space-y-2.5">
-            {[['/about', 'about'], ['/specialities', 'specialities'], ['/doctors', 'doctors'], ['/book', 'book'], ['/gallery', 'gallery'], ['/contact', 'contact']].map(([to, k]) => (
+            {[['/about', 'about'], ['/specialities', 'specialities'], ['/tpa', 'tpa'], ['/book', 'book'], ['/gallery', 'gallery'], ['/contact', 'contact']].map(([to, k]) => (
               <li key={to}><Link to={to} className="hover:text-white">{t(k)}</Link></li>
             ))}
           </ul>

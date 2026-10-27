@@ -11,7 +11,7 @@ export default function NotFound() {
         <p className="mt-3 text-muted">The link may be old or mistyped. In an emergency, call {hospital.emergency}.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link to="/" className="btn-primary">Go to home</Link>
-          <Link to="/doctors" className="btn-outline">Find a doctor</Link>
+          <Link to="/specialities" className="btn-outline">Our departments</Link>
         </div>
       </div>
     </section>

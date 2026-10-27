@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router'
 import { Phone } from 'lucide-react'
-import { hospital, doctorBySlug } from '../data'
+import { hospital } from '../data'
 import { PageHeader } from '../ui'
 import { AppointmentForm, VisitCard } from './Home'
 import { useT } from '../i18n'
@@ -28,7 +28,7 @@ export default function Book() {
               </li>
             ))}
           </ol>
-          <AppointmentForm initialDept={params.get('dept') ?? doctorBySlug[params.get('doctor')]?.dept ?? ''} initialDoctor={params.get('doctor') ?? ''} />
+          <AppointmentForm initialDept={params.get('dept') ?? ''} />
         </div>
         <div className="grid h-fit gap-6">
           <div className="rounded-3xl border border-line p-8">

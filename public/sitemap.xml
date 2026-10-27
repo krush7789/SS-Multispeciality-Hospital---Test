@@ -4,33 +4,14 @@
   <url><loc>https://example.com/</loc></url>
   <url><loc>https://example.com/about</loc></url>
   <url><loc>https://example.com/specialities</loc></url>
-  <url><loc>https://example.com/doctors</loc></url>
+  <url><loc>https://example.com/tpa</loc></url>
   <url><loc>https://example.com/gallery</loc></url>
   <url><loc>https://example.com/book</loc></url>
   <url><loc>https://example.com/contact</loc></url>
-  <url><loc>https://example.com/specialities/internal-medicine</loc></url>
-  <url><loc>https://example.com/specialities/obstetrics-gynaecology</loc></url>
-  <url><loc>https://example.com/specialities/paediatrics-neonatology</loc></url>
-  <url><loc>https://example.com/specialities/general-surgery</loc></url>
+  <url><loc>https://example.com/specialities/medicine</loc></url>
+  <url><loc>https://example.com/specialities/general-laparoscopic-surgery</loc></url>
+  <url><loc>https://example.com/specialities/gynaecology</loc></url>
   <url><loc>https://example.com/specialities/orthopaedics</loc></url>
-  <url><loc>https://example.com/specialities/nephrology</loc></url>
-  <url><loc>https://example.com/specialities/dialysis</loc></url>
-  <url><loc>https://example.com/specialities/pathology-lab</loc></url>
-  <url><loc>https://example.com/specialities/digital-xray-c-arm</loc></url>
-  <url><loc>https://example.com/specialities/ultrasound</loc></url>
-  <url><loc>https://example.com/specialities/echo</loc></url>
-  <url><loc>https://example.com/specialities/tmt</loc></url>
-  <url><loc>https://example.com/specialities/pharmacy</loc></url>
-  <url><loc>https://example.com/specialities/blood-bank</loc></url>
-  <url><loc>https://example.com/specialities/ambulance</loc></url>
-  <url><loc>https://example.com/doctors/dr-ananya-verma</loc></url>
-  <url><loc>https://example.com/doctors/dr-rohit-saxena</loc></url>
-  <url><loc>https://example.com/doctors/dr-meera-kulkarni</loc></url>
-  <url><loc>https://example.com/doctors/dr-imran-qureshi</loc></url>
-  <url><loc>https://example.com/doctors/dr-kavita-rawat</loc></url>
-  <url><loc>https://example.com/doctors/dr-sandeep-bhatia</loc></url>
-  <url><loc>https://example.com/doctors/dr-nisha-agarwal</loc></url>
-  <url><loc>https://example.com/doctors/dr-arjun-mehta</loc></url>
-  <url><loc>https://example.com/doctors/dr-farah-siddiqui</loc></url>
-  <url><loc>https://example.com/doctors/dr-vikram-chauhan</loc></url>
+  <url><loc>https://example.com/specialities/paediatrics</loc></url>
+  <url><loc>https://example.com/specialities/urology</loc></url>
 </urlset>

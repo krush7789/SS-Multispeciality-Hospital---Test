@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
-import { Phone, Mail, Siren, Check, Target, Eye, CalendarCheck } from 'lucide-react'
-import { hospital, leadership, whyUs, specialities, groups, stock } from '../data'
-import { PageHeader, WhatsAppIcon, waLink } from '../ui'
+import { Phone, Mail, Siren, Check, Target, Eye, CalendarCheck, ShieldCheck, FileText, Receipt } from 'lucide-react'
+import { hospital, whyUs, specialities, criticalCare, tpa, own } from '../data'
+import { PageHeader, Faq, WhatsAppIcon, waLink } from '../ui'
 import { VisitCard, EmergencyBand } from './Home'
 import { useT } from '../i18n'
 
@@ -11,17 +11,17 @@ export function About() {
   const { t } = useT()
   return (
     <>
-      <PageHeader title={t('about')} intro="A multispeciality hospital built for Rampur, with specialist doctors, diagnostics and emergency care under one roof." />
+      <PageHeader title={t('about')} intro="A multispeciality hospital built for Rampur, with specialist departments, critical care and a 24×7 emergency under one roof." />
       <section className="container-x grid items-center gap-12 py-14 lg:grid-cols-2 lg:gap-20 lg:py-24">
         <div>
           <p className="eyebrow mb-3">Who we are</p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Specialist care without leaving Rampur</h2>
           <div className="prose-ss mt-6">
-            <p>{hospital.name} brings {specialities.length} services together in one building near Old Ramlila: clinical departments, in-house diagnostics, a pharmacy, a blood bank and an ambulance service.</p>
-            <p>Because the doctors, lab and imaging work side by side, most patients can get tests, treatment and medicines in a single visit.</p>
+            <p>{hospital.name} brings {specialities.length} specialist departments together in one building near Old Ramlila, with an ICU, an NCU and an emergency that is open 24×7.</p>
+            <p>Our TPA desk helps insured patients with cashless approvals and reimbursement papers, so families can focus on recovery.</p>
           </div>
         </div>
-        <img src={stock.building} alt="SS Multispeciality Hospital building" loading="lazy" className="aspect-[9/10] w-full rounded-[2rem] object-cover" />
+        <img src={own.street} alt="SS Multispeciality Hospital building" loading="lazy" className="aspect-[9/10] w-full rounded-[2rem] object-cover" />
       </section>
 
       <section className="bg-brand-800 text-white">
@@ -37,31 +37,18 @@ export function About() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container-x">
-          <p className="eyebrow mb-3">Leadership</p>
-          <h2 className="mb-10 text-3xl font-semibold tracking-tight sm:text-4xl">The people who run the hospital</h2>
-          <div className="grid gap-8 sm:grid-cols-3">
-            {leadership.map((p) => (
-              <figure key={p.name}>
-                <img src={p.photo} alt={`Portrait of ${p.name} (placeholder)`} loading="lazy" className="aspect-[4/5] w-full rounded-2xl bg-brand-100 object-cover" />
-                <figcaption className="mt-4"><span className="block font-display text-lg font-semibold">{p.name}</span><span className="text-muted">{p.role}</span></figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="section bg-soft">
         <div className="container-x grid gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
             <p className="eyebrow mb-3">Under one roof</p>
             <h2 className="mb-8 text-3xl font-semibold tracking-tight">What you’ll find here</h2>
             <div className="grid gap-6 sm:grid-cols-3 lg:grid-cols-1">
-              {groups.map((g) => (
-                <div key={g.id}>
-                  <h3 className="mb-2 text-lg font-semibold">{g.label}</h3>
-                  <p className="text-muted">{specialities.filter((s) => s.group === g.id).map((s) => s.name).join(' · ')}</p>
+              {[['Departments', specialities.map((s) => s.name)],
+                ['Critical care', criticalCare.map((u) => `${u.name} (${u.full})`)],
+                ['Emergency & insurance', ['24×7 emergency', 'TPA / insurance desk']]].map(([h, items]) => (
+                <div key={h}>
+                  <h3 className="mb-2 text-lg font-semibold">{h}</h3>
+                  <p className="text-muted">{items.join(' · ')}</p>
                 </div>
               ))}
             </div>
@@ -79,12 +66,71 @@ export function About() {
   )
 }
 
+export function Tpa() {
+  const { t } = useT()
+  const check = waLink('Hello, I would like to check whether my health insurance is accepted for treatment. Insurer: ')
+  return (
+    <>
+      <PageHeader title={t('tpa')} intro="Our TPA (Third-Party Administrator) desk works with your health insurer, so you can get cashless treatment or claim your money back." />
+
+      <section className="container-x grid gap-12 py-14 lg:grid-cols-[1.4fr_1fr] lg:gap-16 lg:py-20 [&>*]:min-w-0">
+        <div>
+          <p className="eyebrow mb-3">Cashless treatment</p>
+          <h2 className="mb-8 text-3xl font-semibold tracking-tight sm:text-4xl">How it works</h2>
+          <ol className="grid gap-4">
+            {tpa.cashless.map(([h, p], i) => (
+              <li key={h} className="flex gap-5 rounded-2xl border border-line p-6">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-brand-50 font-display font-semibold text-brand-700">{i + 1}</span>
+                <span><span className="block text-lg font-semibold">{h}</span><span className="mt-1 block text-muted">{p}</span></span>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <aside className="h-fit rounded-3xl bg-brand-800 p-8 text-white lg:sticky lg:top-28">
+          <ShieldCheck className="size-9 text-gold-400" strokeWidth={1.5} />
+          <h2 className="mt-4 text-2xl font-semibold !text-white">Is my insurance accepted?</h2>
+          <p className="mt-3 text-white/80">Send your insurer’s name and policy type before a planned admission. The TPA desk will tell you whether cashless treatment is possible.</p>
+          <div className="mt-6 grid gap-3">
+            <a href={check} target="_blank" rel="noreferrer" className="btn-ghost-light"><WhatsAppIcon className="size-5 text-[#25D366]" /> Ask on WhatsApp</a>
+            <a href={tel(hospital.phone)} className="btn-ghost-light"><Phone className="size-5" /> {hospital.phone}</a>
+          </div>
+        </aside>
+      </section>
+
+      <section className="section bg-soft">
+        <div className="container-x grid gap-6 lg:grid-cols-2">
+          {[[FileText, 'Documents to bring at admission', tpa.documents],
+            [Receipt, 'Papers for a reimbursement claim', tpa.reimbursement]].map(([I, h, items]) => (
+            <div key={h} className="rounded-3xl bg-white p-8 lg:p-10">
+              <I className="size-8 text-brand-700" strokeWidth={1.5} />
+              <h2 className="mt-4 text-2xl font-semibold">{h}</h2>
+              <ul className="mt-6 grid gap-3">{items.map((d) => <li key={d} className="flex gap-3"><Check className="mt-1 size-5 shrink-0 text-brand-600" />{d}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+        <p className="container-x mt-8 text-muted">If cashless approval is not given, you pay the bill and claim it back from your insurer. The TPA desk gives you the reimbursement papers listed above at discharge.</p>
+      </section>
+
+      <section className="section">
+        <div className="container-x grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
+          <div>
+            <p className="eyebrow mb-3">FAQ</p>
+            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Insurance questions</h2>
+          </div>
+          <Faq items={tpa.faqs} />
+        </div>
+      </section>
+      <EmergencyBand />
+    </>
+  )
+}
+
 export function Contact() {
   const { t } = useT()
   return (
     <>
       <PageHeader title={t('contact')} intro="Call, message or visit us. For emergencies, call the 24×7 line directly." />
-      <section className="container-x grid gap-4 pt-12 sm:grid-cols-2 lg:grid-cols-4 lg:pt-16">
+      <section className="container-x grid gap-4 pt-12 sm:grid-cols-2 lg:grid-cols-4 lg:pt-16 [&>*]:min-w-0">
         {[[Siren, t('emergency247'), hospital.emergency, tel(hospital.emergency), true], [Phone, 'Front desk', hospital.phone, tel(hospital.phone)],
           [({ className }) => <WhatsAppIcon className={`${className} !text-[#25D366]`} />, t('whatsapp'), 'Chat with us', waLink()], [Mail, 'Email', hospital.email, `mailto:${hospital.email}`]].map(([I, l, v, h, er]) => (
           <a key={l} href={h} {...(h.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}

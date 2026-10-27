@@ -7,8 +7,8 @@ import { Layout } from './ui'
 import Home from './pages/Home'
 import Book from './pages/Book'
 import NotFound from './pages/NotFound'
-import { Specialities, SpecialityDetail, Doctors, DoctorProfile, Gallery } from './pages/Catalog'
-import { About, Contact } from './pages/Info'
+import { Specialities, SpecialityDetail, Gallery } from './pages/Catalog'
+import { About, Contact, Tpa } from './pages/Info'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -20,8 +20,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="about" element={<About />} />
             <Route path="specialities" element={<Specialities />} />
             <Route path="specialities/:slug" element={<SpecialityDetail />} />
-            <Route path="doctors" element={<Doctors />} />
-            <Route path="doctors/:slug" element={<DoctorProfile />} />
+            <Route path="tpa" element={<Tpa />} />
             <Route path="gallery" element={<Gallery />} />
             <Route path="book" element={<Book />} />
             <Route path="contact" element={<Contact />} />
