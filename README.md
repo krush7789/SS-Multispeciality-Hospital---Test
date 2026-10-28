@@ -9,7 +9,7 @@ npm run build    # static output in dist/
 ```
 
 ## Where things live
-- `src/data.js` — **all content**: hospital info, departments, ICU/NCU, TPA desk, gallery, reviews, FAQs. Stock photos and sample reviews are placeholders; replace here before launch.
+- `src/data.js` — **all content**: hospital info, departments, ICU/NICU, TPA desk, gallery, reviews, FAQs. Stock photos and sample reviews are placeholders; replace here before launch.
 - `src/i18n.jsx` — English / Hindi interface text.
 - `src/ui.jsx` — layout (header, footer, mobile action bar) and shared components.
 - `src/pages/` — Home, Book (appointment *request* via WhatsApp), Catalog (departments, gallery), Info (about, insurance & TPA, contact).

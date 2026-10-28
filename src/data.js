@@ -51,9 +51,9 @@ export const specialities = [
     conditions: ['Fractures and dislocations', 'Back and neck pain', 'Sports injuries'],
     procedures: ['Plaster and splinting', 'Fracture surgery', 'Joint pain management', 'Knee and hip replacement'] },
   { slug: 'paediatrics', name: 'Paediatrics', icon: Baby,
-    summary: 'Care for newborns, infants and children, backed by the hospital’s NCU for babies who need extra support.',
+    summary: 'Care for newborns, infants and children, backed by the hospital’s NICU for babies who need extra support.',
     conditions: ['Childhood fever and infections', 'Newborn jaundice', 'Growth and nutrition concerns', 'Breathing problems'],
-    procedures: ['Child OPD', 'Newborn care in the NCU', 'Vaccination advice'] },
+    procedures: ['Child OPD', 'Newborn care in the NICU', 'Vaccination advice'] },
   { slug: 'urology', name: 'Urology', icon: Droplets,
     summary: 'Care for kidney stones, prostate and urinary problems in men and women.',
     conditions: ['Kidney and ureter stones', 'Prostate enlargement', 'Urinary infections', 'Difficulty passing urine'],
@@ -67,7 +67,7 @@ export const criticalCare = [
   { id: 'icu', name: 'ICU', full: 'Intensive Care Unit', icon: BedDouble,
     text: 'For patients who need close, round-the-clock monitoring: after major surgery, serious infections, or any condition where things can change quickly.',
     points: ['Continuous monitoring, day and night', 'Nursing staff on every shift', 'Direct admission from the 24×7 emergency'] },
-  { id: 'ncu', name: 'NCU', full: 'Newborn Care Unit', icon: Baby,
+  { id: 'ncu', name: 'NICU', full: 'Neonatal Intensive Care Unit', icon: Baby,
     text: 'For newborns who need extra care after birth, such as premature or low-birth-weight babies, jaundice, or trouble feeding or breathing.',
     points: ['Mother and baby in the same hospital', 'Close watch on warmth, feeding and breathing', 'Paediatric team on call'] },
 ]
@@ -104,23 +104,23 @@ export const tpa = {
 
 export const testimonials = [
   { text: 'My mother was admitted at night with high fever. The emergency team started treatment within minutes and kept us informed the whole time.', name: 'Rahul K.', place: 'Rampur' },
-  { text: 'The delivery went smoothly and the nurses in the NCU took care of my baby like family. Clean rooms and caring staff.', name: 'Pooja S.', place: 'Bilaspur' },
+  { text: 'The delivery went smoothly and the nurses in the NICU took care of my baby like family. Clean rooms and caring staff.', name: 'Pooja S.', place: 'Bilaspur' },
   { text: 'I had keyhole surgery for gallbladder stones and was walking the next day. The doctor explained everything before the operation.', name: 'Mohd. Arif', place: 'Swar' },
   { text: 'The TPA desk handled our insurance papers, so we could focus on my father’s recovery instead of running around.', name: 'Sunita D.', place: 'Milak' },
 ]
 
-export const galleryCats = ['Building', 'Wards', 'ICU & NCU', 'Operation theatre', 'Patient care']
+export const galleryCats = ['Building', 'Wards', 'ICU & NICU', 'Operation theatre', 'Patient care']
 const shot = (id, cat, alt, h = 600) => ({ src: photo(id, 800, h), full: photo(id, 1600, h * 2), cat, alt: `${alt} (stock photo)` })
 // The hospital's own photos come first (the home page previews the first six).
 // Ordered so neighbouring tiles differ in category and height in the masonry grid.
 export const gallery = [
   { src: own.front, cat: 'Building', alt: 'SS Multispeciality Hospital front entrance' },
   shot('1775947933085-30050ddad6b3', 'Operation theatre', 'Surgical team in the operating room', 1000),
-  shot('1517120026326-d87759a7b63b', 'ICU & NCU', 'Newborn incubator', 800),
+  shot('1517120026326-d87759a7b63b', 'ICU & NICU', 'Newborn incubator', 800),
   { src: own.street, cat: 'Building', alt: 'SS Multispeciality Hospital building, street view' },
   shot('1758691462863-9e1b8a863140', 'Patient care', 'Doctor talking with a patient', 1000),
   shot('1538108149393-fbbd81895907', 'Wards', 'Private patient room'),
-  shot('1778151270757-f3793f65e2de', 'ICU & NCU', 'Monitored beds'),
+  shot('1778151270757-f3793f65e2de', 'ICU & NICU', 'Monitored beds'),
   shot('1640876777002-badf6aee5bcc', 'Operation theatre', 'Surgeons during an operation'),
   shot('1519494026892-80bbd2d6fd0d', 'Building', 'Reception and help desk', 800),
   shot('1758691461990-03b49d969495', 'Patient care', 'Doctor writing on a patient chart'),
@@ -135,7 +135,7 @@ export const gallery = [
 
 export const whyUs = [
   { title: 'Six specialist departments', text: 'Medicine, surgery, gynaecology, orthopaedics, paediatrics and urology in one hospital.' },
-  { title: 'ICU and NCU on site', text: 'Critically ill adults and newborns who need extra care are looked after without a transfer.' },
+  { title: 'ICU and NICU on site', text: 'Critically ill adults and newborns who need extra care are looked after without a transfer.' },
   { title: 'Help with insurance', text: 'Our TPA desk handles cashless approvals and reimbursement papers for insured patients.' },
   { title: 'Easy to reach', text: 'In the heart of Rampur near Old Ramlila, with parking and a 24×7 emergency.' },
 ]
@@ -143,7 +143,7 @@ export const whyUs = [
 export const faqs = [
   { q: 'What are the OPD timings?', a: 'OPD runs Monday to Saturday, 9:00 AM to 7:00 PM. Emergency is open 24×7, all days.' },
   { q: 'Do I need an appointment?', a: 'Walk-ins are welcome, but sending an appointment request on WhatsApp or by phone reduces your waiting time.' },
-  { q: 'Do you have an ICU and NCU?', a: 'Yes. The hospital has an ICU for critically ill patients and an NCU for newborns who need extra care.' },
+  { q: 'Do you have an ICU and NICU?', a: 'Yes. The hospital has an ICU for critically ill patients and a NICU for newborns who need extra care.' },
   { q: 'Do you accept health insurance?', a: 'Yes, through our TPA desk. Share your insurer’s name before a planned admission to check whether cashless treatment is possible.' },
   { q: 'How do I call an ambulance?', a: `Call the emergency number ${hospital.emergency}. Our ambulance is available around the clock.` },
 ]

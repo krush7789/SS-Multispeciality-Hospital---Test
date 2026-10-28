@@ -12,7 +12,7 @@ export function Specialities() {
   const { t } = useT()
   return (
     <>
-      <PageHeader title={t('specialities')} intro="Six specialist departments, supported by an ICU, an NCU and a 24×7 emergency." />
+      <PageHeader title={t('specialities')} intro="Six specialist departments, supported by an ICU, a NICU and a 24×7 emergency." />
       <section className="container-x py-14 lg:py-20">
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {specialities.map((s) => <SpecialityCard key={s.slug} s={s} />)}
@@ -40,7 +40,7 @@ export function SpecialityDetail() {
         <div className="min-w-0 space-y-14">
           <div className="flex items-start gap-5">
             <IconBadge icon={s.icon} className="size-16 shrink-0" />
-            <p className="text-lg text-muted">Our {s.name.replace(/^Department of /, '').toLowerCase()} team works alongside the hospital’s ICU, NCU and 24×7 emergency, so patients who need closer care stay in {hospital.short} without a transfer.</p>
+            <p className="text-lg text-muted">Our {s.name.replace(/^Department of /, '').toLowerCase()} team works alongside the hospital’s ICU, NICU and 24×7 emergency, so patients who need closer care stay in {hospital.short} without a transfer.</p>
           </div>
           <div>
             <h2 className="mb-5 text-2xl font-semibold">Conditions we treat</h2>

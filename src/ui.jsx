@@ -321,7 +321,7 @@ function Footer() {
             <img src="/favicon.svg" alt="" className="size-10" />
             <span className="font-display text-lg font-bold text-white">{hospital.name}</span>
           </div>
-          <p className="mt-4 max-w-xs">Six specialist departments, ICU, NCU and a 24×7 emergency, close to home in Rampur.</p>
+          <p className="mt-4 max-w-xs">Six specialist departments, ICU, NICU and a 24×7 emergency, close to home in Rampur.</p>
           <div className="mt-6 flex gap-3">
             {[[Fb, 'Facebook', hospital.socials.facebook], [Ig, 'Instagram', hospital.socials.instagram], [Yt, 'YouTube', hospital.socials.youtube]].map(([I, l, h]) => (
               <a key={l} href={h} aria-label={l} className="grid size-10 place-items-center rounded-full border border-white/20 text-white transition hover:bg-white hover:text-brand-900"><I className="size-4" /></a>

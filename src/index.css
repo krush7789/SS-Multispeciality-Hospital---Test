@@ -131,7 +131,7 @@ dialog::backdrop { background: rgb(8 48 47 / 0.85); }
     box-shadow: 0 24px 50px -28px rgb(0 0 0 / .7), inset 0 1px 0 rgb(255 255 255 / .06); }
 }
 
-/* Holographic cards (departments, ICU/NCU): an iridescent sheen and a glowing edge follow the pointer.
+/* Holographic cards (departments, ICU/NICU): an iridescent sheen and a glowing edge follow the pointer.
    --x/--y (0–1) come from trackPointer in ui.jsx. */
 .holo { position: relative; }
 .holo::before, .holo::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .35s ease; }
@@ -150,7 +150,7 @@ dialog::backdrop { background: rgb(8 48 47 / 0.85); }
 .holo-dark { --edge-a: rgb(240 183 47 / .75); --edge-b: rgb(174 211 212 / .3); }
 .holo-dark::after { mix-blend-mode: screen; }
 
-/* ICU/NCU section: ECG chart-paper grid and a slow monitor sweep behind the cards. */
+/* ICU/NICU section: ECG chart-paper grid and a slow monitor sweep behind the cards. */
 .monitor-bg { position: relative; isolation: isolate; overflow: hidden; }
 .monitor-bg::before, .monitor-bg::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 .monitor-bg::before {

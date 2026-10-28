@@ -31,7 +31,7 @@ export function Hero() {
             <a href={emergencyLink} target="_blank" rel="noreferrer" className="btn-outline !border-er-600/30 !text-er-600 hover:!bg-er-600/5 hover:!border-er-600"><Siren className="size-5" /> {t('emergency')}</a>
           </div>
           <ul className="mt-10 flex flex-wrap gap-2.5">
-            {[[Ambulance, '24×7 Emergency'], [BedDouble, 'ICU'], [Baby, 'NCU'], [ShieldCheck, 'TPA / Insurance desk']].map(([I, l]) => (
+            {[[Ambulance, '24×7 Emergency'], [BedDouble, 'ICU'], [Baby, 'NICU'], [ShieldCheck, 'TPA / Insurance desk']].map(([I, l]) => (
               <li key={l} className="chip bg-white shadow-sm shadow-brand-900/5"><I className="size-4" strokeWidth={1.75} /> {l}</li>
             ))}
           </ul>
@@ -45,7 +45,7 @@ export function Hero() {
               {['tl', 'tr', 'bl', 'br'].map((c) => <i key={c} className={`hud-c hud-${c}`} />)}
               <i className="hud-scan" /><i className="hud-reticle" />
               <span className="hud-tags">
-                {[['ER 24×7', 'ACTIVE'], ['ICU', 'ONLINE'], ['NCU', 'ONLINE'], ['OT', 'READY']].map(([a, b], k) => (
+                {[['ER 24×7', 'ACTIVE'], ['ICU', 'ONLINE'], ['NICU', 'ONLINE'], ['OT', 'READY']].map(([a, b], k) => (
                   <span key={a} className="hud-tag" style={{ '--k': k }}><i />{a}<em>{b}</em></span>
                 ))}
               </span>
@@ -130,9 +130,9 @@ function About() {
         <div className="reveal">
           <p className="eyebrow mb-3">{t('about')}</p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[2.75rem] lg:leading-[1.15]">A neighbourhood hospital with specialist depth</h2>
-          <p className="mt-5 text-lg text-muted">Families come to us for deliveries, surgeries, fractures and everyday illness. Six specialist departments work alongside an ICU, an NCU and a 24×7 emergency near Old Ramlila, so patients who need closer care stay in one place.</p>
+          <p className="mt-5 text-lg text-muted">Families come to us for deliveries, surgeries, fractures and everyday illness. Six specialist departments work alongside an ICU, a NICU and a 24×7 emergency near Old Ramlila, so patients who need closer care stay in one place.</p>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-            {[[Award, 'Qualified specialists'], [Scissors, 'Operation theatre'], [BedDouble, 'ICU & NCU'], [Users, 'Caring nursing staff']].map(([I, l]) => (
+            {[[Award, 'Qualified specialists'], [Scissors, 'Operation theatre'], [BedDouble, 'ICU & NICU'], [Users, 'Caring nursing staff']].map(([I, l]) => (
               <li key={l} className="flex items-center gap-3 font-medium"><I className="size-5 text-gold-600" /> {l}</li>
             ))}
           </ul>
