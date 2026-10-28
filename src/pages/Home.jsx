@@ -327,7 +327,7 @@ export function VisitCard() {
         <li className="flex gap-3"><MapPin className="mt-0.5 size-5 shrink-0 text-gold-400" />{hospital.address}</li>
         <li className="flex gap-3"><Landmark className="mt-0.5 size-5 shrink-0 text-gold-400" />{hospital.landmark}</li>
         <li className="flex gap-3"><Car className="mt-0.5 size-5 shrink-0 text-gold-400" />{hospital.parking}</li>
-        <li className="flex gap-3"><Clock className="mt-0.5 size-5 shrink-0 text-gold-400" /><span>{t('opd')}: {hospital.opd}<br />{t('emergency')}: 24×7, all days</span></li>
+        <li className="flex gap-3"><Clock className="mt-0.5 size-5 shrink-0 text-gold-400" /><span>{t('ipd')}: {hospital.ipd}<br />{t('opd')}: {hospital.opd}<br />{t('emergency')}: 24×7, all days</span></li>
       </ul>
       <a href={hospital.mapUrl} target="_blank" rel="noreferrer" className="btn-ghost-light mt-8">{t('directions')} <ArrowRight className="size-4" /></a>
     </div>

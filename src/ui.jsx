@@ -210,7 +210,10 @@ function UtilityBar() {
           {t('emergency247')}: <span className="tabular-nums">{hospital.emergency}</span>
         </a>
         <div className="flex items-center gap-5">
-          <span className="hidden items-center gap-1.5 md:inline-flex"><Clock className="size-3.5" /> {t('opd')}: {hospital.opd}</span>
+          <span className="hidden items-center gap-1.5 whitespace-nowrap rounded-full bg-gold-400/15 px-2.5 py-0.5 font-semibold text-gold-400 md:inline-flex">
+            <span className="size-1.5 rounded-full bg-gold-400" /> {t('ipd')}: {hospital.ipd}
+          </span>
+          <span className="hidden items-center gap-1.5 lg:inline-flex"><Clock className="size-3.5" /> {t('opd')}: {hospital.opd}</span>
           <button onClick={() => setLang(lang === 'en' ? 'hi' : 'en')} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 px-2.5 py-0.5 hover:bg-white/10"
             aria-label={lang === 'en' ? 'हिंदी में देखें' : 'View in English'}>
             <Languages className="size-3.5" /> {lang === 'en' ? 'हिंदी' : 'English'}

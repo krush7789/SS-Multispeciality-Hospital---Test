@@ -15,6 +15,7 @@ export const hospital = {
   whatsapp: '919548730323',
   email: 'hospitalssmultispeciality@gmail.com',
   opd: 'Mon–Sat, 9:00 AM – 7:00 PM',
+  ipd: 'Open 24 Hours (Monday to Sunday)',
   mapUrl: 'https://www.google.com/maps/search/?api=1&query=' +
     encodeURIComponent('Topkhana Rd, Old Ramlila, Pranpur, Rampur, Uttar Pradesh 244901'),
   socials: { facebook: '#', instagram: '#', youtube: '#' },
