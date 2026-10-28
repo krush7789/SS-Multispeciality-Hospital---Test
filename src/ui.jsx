@@ -10,7 +10,10 @@ import { useT } from './i18n'
 const tel = (n) => `tel:${n.replace(/\s/g, '')}`
 export const waLink = (msg = 'Hello, I would like to request an appointment.', to = hospital.whatsapp) =>
   `https://wa.me/${to}?text=${encodeURIComponent(msg)}`
-export const emergencyLink = waLink('EMERGENCY: I need urgent help.', hospital.emergency.replace(/\D/g, ''))
+// Emergency buttons: phones open the dialler, computers open WhatsApp (in a new tab) to the same number.
+const isPhone = /Mobi|Android|iPhone|iPod/i.test(navigator.userAgent)
+export const emergencyLink = isPhone ? tel(hospital.emergency) : waLink('EMERGENCY: I need urgent help.', hospital.emergency.replace(/\D/g, ''))
+export const emergencyAttrs = isPhone ? { href: emergencyLink } : { href: emergencyLink, target: '_blank', rel: 'noreferrer' }
 // Pointer position (0–1) for the .holo card effects in index.css.
 export const trackPointer = (e) => {
   const el = e.currentTarget, r = el.getBoundingClientRect()
@@ -303,7 +306,7 @@ function Header() {
           </nav>
           <div className="mt-8 grid gap-3">
             <Link to="/book" className="btn-primary"><CalendarCheck className="size-5" /> {t('book')}</Link>
-            <a href={emergencyLink} target="_blank" rel="noreferrer" className="btn-er"><Siren className="size-5" /> {t('emergency')}</a>
+            <a {...emergencyAttrs} className="btn-er"><Siren className="size-5" /> {t('emergency')}</a>
           </div>
         </aside>
       </div>

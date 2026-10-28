@@ -7,7 +7,7 @@ import {
 import { hospital, specialities, criticalCare, tpa, testimonials, gallery, whyUs, faqs, photo, stock, own } from '../data'
 import { useT } from '../i18n'
 import { Helix, BedsideMonitor } from '../fx'
-import { SectionHead, SpecialityCard, Counter, Carousel, Faq, Sent, Heartbeat, WhatsAppIcon, waLink, emergencyLink, trackPointer } from '../ui'
+import { SectionHead, SpecialityCard, Counter, Carousel, Faq, Sent, Heartbeat, WhatsAppIcon, waLink, emergencyLink, emergencyAttrs, trackPointer } from '../ui'
 
 export function Hero() {
   const { t } = useT()
@@ -28,7 +28,7 @@ export function Hero() {
           <p className="max-w-xl text-lg text-muted sm:text-xl">{t('heroText')}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/book" className="btn-primary"><CalendarCheck className="size-5" /> {t('book')}</Link>
-            <a href={emergencyLink} target="_blank" rel="noreferrer" className="btn-outline !border-er-600/30 !text-er-600 hover:!bg-er-600/5 hover:!border-er-600"><Siren className="size-5" /> {t('emergency')}</a>
+            <a {...emergencyAttrs} className="btn-outline !border-er-600/30 !text-er-600 hover:!bg-er-600/5 hover:!border-er-600"><Siren className="size-5" /> {t('emergency')}</a>
           </div>
           <ul className="mt-10 flex flex-wrap gap-2.5">
             {[[Ambulance, '24×7 Emergency'], [Hospital, 'IPD'], ...criticalCare.map((u) => [u.icon, u.name]), [ShieldCheck, 'TPA / Insurance desk']].map(([I, l]) => (
@@ -68,7 +68,7 @@ function QuickActions() {
   const items = [
     [CalendarCheck, t('book'), 'Send a request on WhatsApp', '/book'],
     [LayoutGrid, t('specialities'), 'Our six specialist departments', '/specialities'],
-    [Siren, t('emergency'), 'Message our 24×7 emergency team', emergencyLink],
+    [Siren, t('emergency'), 'Reach our 24×7 emergency team', emergencyLink],
     [ShieldCheck, t('tpa'), 'Cashless and reimbursement help', '/tpa'],
   ]
   return (
