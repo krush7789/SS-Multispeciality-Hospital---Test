@@ -48,7 +48,7 @@ export const specialities = [
     procedures: ['Normal and caesarean delivery', 'Antenatal and postnatal check-ups', 'Gynaecological surgery'] },
   { slug: 'orthopaedics', name: 'Orthopaedics', icon: Bone,
     summary: 'Treatment for fractures, joint pain and back problems, from plaster to surgery.',
-    conditions: ['Fractures and dislocations', 'Knee and hip pain', 'Back and neck pain', 'Sports injuries'],
+    conditions: ['Fractures and dislocations', 'Knee and hip replacement', 'Back and neck pain', 'Sports injuries'],
     procedures: ['Plaster and splinting', 'Fracture surgery', 'Joint pain management'] },
   { slug: 'paediatrics', name: 'Paediatrics', icon: Baby,
     summary: 'Care for newborns, infants and children, backed by the hospital’s NCU for babies who need extra support.',
