@@ -6,7 +6,8 @@ import {
 } from 'lucide-react'
 import { hospital, specialities, criticalCare, tpa, testimonials, gallery, whyUs, faqs, photo, stock, own } from '../data'
 import { useT } from '../i18n'
-import { SectionHead, SpecialityCard, Counter, Carousel, Faq, Sent, Heartbeat, WhatsAppIcon, waLink } from '../ui'
+import { Helix, BedsideMonitor } from '../fx'
+import { SectionHead, SpecialityCard, Counter, Carousel, Faq, Sent, Heartbeat, WhatsAppIcon, waLink, emergencyLink, trackPointer } from '../ui'
 
 export function Hero() {
   const { t } = useT()
@@ -27,7 +28,7 @@ export function Hero() {
           <p className="max-w-xl text-lg text-muted sm:text-xl">{t('heroText')}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/book" className="btn-primary"><CalendarCheck className="size-5" /> {t('book')}</Link>
-            <a href={`tel:${hospital.emergency.replace(/\s/g, '')}`} className="btn-outline !border-er-600/30 !text-er-600 hover:!bg-er-600/5 hover:!border-er-600"><Siren className="size-5" /> {t('emergency')}</a>
+            <a href={emergencyLink} target="_blank" rel="noreferrer" className="btn-outline !border-er-600/30 !text-er-600 hover:!bg-er-600/5 hover:!border-er-600"><Siren className="size-5" /> {t('emergency')}</a>
           </div>
           <ul className="mt-10 flex flex-wrap gap-2.5">
             {[[Ambulance, '24×7 Emergency'], [BedDouble, 'ICU'], [Baby, 'NCU'], [ShieldCheck, 'TPA / Insurance desk']].map(([I, l]) => (
@@ -37,9 +38,18 @@ export function Hero() {
         </div>
 
         <div className="relative z-10">
-          <div className="overflow-hidden rounded-[2rem] shadow-2xl shadow-brand-900/15">
+          <div className="relative overflow-hidden rounded-[2rem] shadow-2xl shadow-brand-900/15">
             <img src={own.front} alt="SS Multispeciality Hospital building with its Emergency 24×7 entrance" fetchPriority="high"
               className="hero-zoom aspect-[10/11] w-full object-cover object-top" />
+            <div aria-hidden className="hud">
+              {['tl', 'tr', 'bl', 'br'].map((c) => <i key={c} className={`hud-c hud-${c}`} />)}
+              <i className="hud-scan" /><i className="hud-reticle" />
+              <span className="hud-tags">
+                {[['ER 24×7', 'ACTIVE'], ['ICU', 'ONLINE'], ['NCU', 'ONLINE'], ['OT', 'READY']].map(([a, b], k) => (
+                  <span key={a} className="hud-tag" style={{ '--k': k }}><i />{a}<em>{b}</em></span>
+                ))}
+              </span>
+            </div>
           </div>
           <div className="absolute -bottom-6 left-4 flex items-center gap-3 rounded-2xl bg-white p-4 pr-6 shadow-xl shadow-brand-900/15 sm:-left-8">
             <span className="grid size-12 place-items-center rounded-full bg-er-600/10 text-er-600"><Ambulance className="size-6" /></span>
@@ -58,7 +68,7 @@ function QuickActions() {
   const items = [
     [CalendarCheck, t('book'), 'Send a request on WhatsApp', '/book'],
     [LayoutGrid, t('specialities'), 'Our six specialist departments', '/specialities'],
-    [Siren, t('emergency'), 'Call our 24×7 emergency line', `tel:${hospital.emergency.replace(/\s/g, '')}`],
+    [Siren, t('emergency'), 'Message our 24×7 emergency team', emergencyLink],
     [ShieldCheck, t('tpa'), 'Cashless and reimbursement help', '/tpa'],
   ]
   return (
@@ -137,7 +147,8 @@ function Specialities() {
   const { t } = useT()
   return (
     <section className="section bg-soft">
-      <div className="container-x">
+      <div className="container-x relative">
+        <Helix className="helix-canvas" />
         <SectionHead eyebrow={t('specialities')} title={t('secSpecialities')}
           text="From pregnancy care to fracture treatment, our departments work together so you get the right care in one place." />
         <div className="reveal grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -173,8 +184,9 @@ function WhyUs() {
 export function CriticalCare() {
   const { t } = useT()
   return (
-    <section className="bg-brand-800 py-16 text-white lg:py-24">
-      <div className="container-x">
+    <section className="monitor-bg bg-brand-800 py-16 text-white lg:py-24">
+      <div className="container-x relative">
+        <BedsideMonitor className="bedside-canvas" />
         <div className="mb-10 max-w-2xl lg:mb-14">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-gold-400">{t('criticalCare')}</p>
           <h2 className="text-3xl font-semibold tracking-tight !text-white sm:text-4xl">{t('secCritical')}</h2>
@@ -182,7 +194,8 @@ export function CriticalCare() {
         </div>
         <div className="grid gap-5 lg:grid-cols-2">
           {criticalCare.map((u) => (
-            <article key={u.id} className="reveal rounded-3xl border border-white/10 bg-white/5 p-8 lg:p-10">
+            <article key={u.id} onPointerMove={trackPointer}
+              className="holo holo-dark reveal rounded-3xl border border-white/10 bg-white/5 p-8 transition-colors duration-400 hover:border-gold-400/20 hover:bg-white/[.075] lg:p-10">
               <div className="flex items-center gap-4">
                 <span className="grid size-14 shrink-0 place-items-center rounded-full bg-gold-400/15 text-gold-400"><u.icon className="size-7" strokeWidth={1.5} /></span>
                 <h3 className="!text-white"><span className="block font-display text-3xl font-bold">{u.name}</span><span className="text-base font-medium text-white/70">{u.full}</span></h3>
@@ -236,9 +249,6 @@ function Reviews() {
         <div>
           <p className="eyebrow mb-3">Reviews</p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t('secReviews')}</h2>
-          <p className="mt-6 rounded-xl border border-gold-500/40 bg-white px-4 py-3 text-sm text-muted">
-            <b className="text-ink">Sample text.</b> These are not real patient reviews. Replace them with real feedback, shared with the patient’s consent, before launch.
-          </p>
         </div>
         <Carousel label="Patient reviews">
           {testimonials.map((r) => (
@@ -263,8 +273,9 @@ function GalleryPreview() {
           action={<Link to="/gallery" className="btn-outline">{t('viewAll')} <ArrowRight className="size-4" /></Link>} />
         <div className="reveal columns-2 gap-4 lg:columns-3 [&>*]:mb-4">
           {gallery.slice(0, 6).map((g) => (
-            <Link key={g.src} to="/gallery" className="block overflow-hidden rounded-2xl">
-              <img src={g.src} alt={g.alt} loading="lazy" className="w-full transition duration-500 hover:scale-[1.03]" />
+            <Link key={g.src} to="/gallery" className="gal group block overflow-hidden rounded-2xl">
+              <img src={g.src} alt={g.alt} loading="lazy" className="w-full scale-[1.06] transition duration-700 group-hover:scale-100" />
+              <span aria-hidden className="gal-cap">{g.alt.replace(' (stock photo)', '')}</span>
             </Link>
           ))}
         </div>

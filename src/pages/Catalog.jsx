@@ -102,8 +102,9 @@ export function Gallery() {
         </div>
         <div className="columns-2 gap-4 lg:columns-3 [&>*]:mb-4">
           {list.map((g, i) => (
-            <button key={g.src} onClick={(e) => open(i, e.currentTarget.firstChild)} className="group block w-full overflow-hidden rounded-2xl" aria-label={`Open ${g.alt}`}>
-              <img src={g.src} alt={g.alt} loading="lazy" className="w-full transition duration-500 group-hover:scale-[1.03]" />
+            <button key={g.src} onClick={(e) => open(i, e.currentTarget.firstChild)} className="gal group block w-full overflow-hidden rounded-2xl" aria-label={`Open ${g.alt}`}>
+              <img src={g.src} alt={g.alt} loading="lazy" className="w-full scale-[1.06] transition duration-700 group-hover:scale-100" />
+              <span aria-hidden className="gal-cap">{g.alt.replace(' (stock photo)', '')}</span>
             </button>
           ))}
         </div>

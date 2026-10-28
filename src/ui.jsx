@@ -10,6 +10,13 @@ import { useT } from './i18n'
 const tel = (n) => `tel:${n.replace(/\s/g, '')}`
 export const waLink = (msg = 'Hello, I would like to request an appointment.') =>
   `https://wa.me/${hospital.whatsapp}?text=${encodeURIComponent(msg)}`
+export const emergencyLink = waLink('EMERGENCY: I need urgent help.')
+// Pointer position (0–1) for the .holo card effects in index.css.
+export const trackPointer = (e) => {
+  const el = e.currentTarget, r = el.getBoundingClientRect()
+  el.style.setProperty('--x', ((e.clientX - r.left) / r.width).toFixed(3))
+  el.style.setProperty('--y', ((e.clientY - r.top) / r.height).toFixed(3))
+}
 
 // Official WhatsApp glyph (Simple Icons path); brand green #25D366. Keep it unaltered per WhatsApp brand guidelines.
 export const WhatsAppIcon = ({ className = '' }) => (
@@ -78,8 +85,8 @@ export function IconBadge({ icon: Icon, className = '' }) {
 
 export function SpecialityCard({ s }) {
   return (
-    <Link to={`/specialities/${s.slug}`}
-      className="group flex flex-col gap-4 rounded-2xl p-6 transition duration-200 hover:-translate-y-1 hover:bg-white hover:shadow-xl hover:shadow-brand-900/8">
+    <Link to={`/specialities/${s.slug}`} onPointerMove={trackPointer}
+      className="holo holo-lift group flex flex-col gap-4 rounded-2xl p-6 transition duration-200 hover:-translate-y-1 hover:bg-white hover:shadow-xl hover:shadow-brand-900/8">
       <IconBadge icon={s.icon} className="group-hover:scale-110 group-hover:bg-brand-700 group-hover:text-white" />
       <div>
         <h3 className="text-lg font-semibold">{s.name}</h3>
@@ -215,7 +222,7 @@ function UtilityBar() {
 }
 
 const navCls = ({ isActive }) =>
-  `relative whitespace-nowrap py-2 text-base font-medium transition hover:text-brand-700 ${isActive ? 'text-brand-700' : 'text-ink'}`
+  `ecg-link relative whitespace-nowrap py-2 text-base font-medium transition hover:text-brand-700 ${isActive ? 'text-brand-700' : 'text-ink'}`
 
 function Dropdown({ label, to, children }) {
   return (
@@ -241,7 +248,7 @@ function Header() {
 
   return (
     <>
-    <header className="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-md">
+    <header className="scroll-line sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-md">
       <div className="container-x flex h-[72px] items-center justify-between gap-3 sm:gap-6">
         <Link to="/" className="flex shrink-0 items-center gap-3" aria-label={`${hospital.name}, home`}>
           <img src="/favicon.svg" alt="" className="size-10" />
@@ -293,7 +300,7 @@ function Header() {
           </nav>
           <div className="mt-8 grid gap-3">
             <Link to="/book" className="btn-primary"><CalendarCheck className="size-5" /> {t('book')}</Link>
-            <a href={tel(hospital.emergency)} className="btn-er"><Siren className="size-5" /> {t('emergency')}</a>
+            <a href={emergencyLink} target="_blank" rel="noreferrer" className="btn-er"><Siren className="size-5" /> {t('emergency')}</a>
           </div>
         </aside>
       </div>
@@ -304,7 +311,10 @@ function Header() {
 function Footer() {
   const { t } = useT()
   return (
-    <footer className="bg-brand-900 pb-24 text-white/75 lg:pb-0">
+    <footer className="relative overflow-hidden bg-brand-900 pb-24 text-white/75 lg:pb-0">
+      <svg aria-hidden viewBox="0 0 1200 40" preserveAspectRatio="xMidYMid slice" className="footer-ecg pointer-events-none absolute left-0 top-2.5 h-10 w-full">
+        {['base', 'run'].map((c) => <path key={c} className={c} pathLength="1000" d={'M0 22' + 'h112 l4 -3 l4 3 h6 l3 5 l5 -19 l5 23 l3 -9 h9 l6 -4 l6 4 h137'.repeat(4)} />)}
+      </svg>
       <div className="container-x grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.4fr] lg:py-20 [&>*]:min-w-0">
         <div>
           <div className="flex items-center gap-3">
