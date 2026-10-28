@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react'
 import { Link } from 'react-router'
 import {
   CalendarCheck, Siren, LayoutGrid, ShieldCheck, ArrowRight, Ambulance, BedDouble, Baby, Check,
-  Quote, MapPin, Clock, Car, Landmark, Award, Scissors, Users,
+  Quote, MapPin, Clock, Car, Landmark, Award, Scissors, Users, Hospital,
 } from 'lucide-react'
 import { hospital, specialities, criticalCare, tpa, testimonials, gallery, whyUs, faqs, photo, stock, own } from '../data'
 import { useT } from '../i18n'
@@ -31,7 +31,7 @@ export function Hero() {
             <a href={emergencyLink} target="_blank" rel="noreferrer" className="btn-outline !border-er-600/30 !text-er-600 hover:!bg-er-600/5 hover:!border-er-600"><Siren className="size-5" /> {t('emergency')}</a>
           </div>
           <ul className="mt-10 flex flex-wrap gap-2.5">
-            {[[Ambulance, '24×7 Emergency'], ...criticalCare.map((u) => [u.icon, u.name]), [ShieldCheck, 'TPA / Insurance desk']].map(([I, l]) => (
+            {[[Ambulance, '24×7 Emergency'], [Hospital, 'IPD'], ...criticalCare.map((u) => [u.icon, u.name]), [ShieldCheck, 'TPA / Insurance desk']].map(([I, l]) => (
               <li key={l} className="chip bg-white shadow-sm shadow-brand-900/5"><I className="size-4" strokeWidth={1.75} /> {l}</li>
             ))}
           </ul>
@@ -103,7 +103,7 @@ function Stats() {
     <section className="container-x pt-20 lg:pt-28">
       <dl className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4 lg:gap-x-8 [&>*]:min-w-0">
         {facts.map((s) => (
-          <div key={s.label} className="reveal border-l-2 border-brand-100 pl-5">
+          <div key={s.label} className="stat-drip reveal border-l-2 border-brand-100 pl-5">
             <dd className="font-display text-[clamp(1.9rem,3.2vw,2.75rem)] font-bold leading-tight text-brand-700">
               {typeof s.value === 'number' ? <Counter value={s.value} /> : s.value}
             </dd>
