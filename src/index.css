@@ -146,7 +146,6 @@ dialog::backdrop { background: rgb(8 48 47 / 0.85); }
   70% { top: calc(100% - 8px); opacity: 1; transform: scale(1); }
   80%, 100% { top: calc(100% - 6px); opacity: 0; transform: scale(1.6, .3); }
 }
-@media (prefers-reduced-motion: reduce) { .stat-drip:hover::after { animation: none; } }
 
 /* Holographic cards (departments, ICU/NICU): an iridescent sheen and a glowing edge follow the pointer.
    --x/--y (0–1) come from trackPointer in ui.jsx. */
@@ -161,7 +160,7 @@ dialog::backdrop { background: rgb(8 48 47 / 0.85); }
     calc(var(--x, .5) * 100%) calc(var(--y, .5) * 100%) / 240% 240%; }
 .holo:hover::before, .holo:hover::after { opacity: 1; }
 .holo-lift:hover { background-image: radial-gradient(260px circle at calc(var(--x, .5) * 100%) calc(var(--y, .5) * 100%), rgb(22 103 107 / .11), rgb(224 161 0 / .035) 45%, transparent 72%); }
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+@media (hover: hover) {
   .holo-lift:hover { transform: perspective(900px) rotateX(calc((.5 - var(--y, .5)) * 9deg)) rotateY(calc((var(--x, .5) - .5) * 11deg)); }
 }
 .holo-dark { --edge-a: rgb(240 183 47 / .75); --edge-b: rgb(174 211 212 / .3); }
@@ -220,14 +219,6 @@ dialog::backdrop { background: rgb(8 48 47 / 0.85); }
     repeating-linear-gradient(0deg, rgb(255 255 255 / .12) 0 1px, transparent 1px 26px), linear-gradient(to top, rgb(94 234 212 / .22), transparent);
   -webkit-mask-image: linear-gradient(to top, #000, transparent); mask-image: linear-gradient(to top, #000, transparent); }
 @keyframes hud-scan { 0% { top: 0; opacity: 0; } 8% { opacity: 1; } 55% { top: 100%; opacity: 1; } 60%, 100% { top: 100%; opacity: 0; } }
-.hud-reticle { position: absolute; left: 50%; top: 46%; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%;
-  border: 1.5px solid rgb(255 255 255 / .75); box-shadow: 0 0 12px rgb(94 234 212 / .5), inset 0 0 12px rgb(94 234 212 / .25);
-  animation: hud-reticle 3.2s ease-in-out 1.4s infinite both; }
-.hud-reticle::before, .hud-reticle::after { content: ''; position: absolute; left: 50%; top: 50%; background: rgb(255 255 255 / .85); }
-.hud-reticle::before { width: 74px; height: 1px; margin-left: -37px;
-  -webkit-mask: linear-gradient(90deg, #000 0 14px, transparent 14px 60px, #000 60px); mask: linear-gradient(90deg, #000 0 14px, transparent 14px 60px, #000 60px); }
-.hud-reticle::after { width: 1px; height: 74px; margin-top: -37px;
-  -webkit-mask: linear-gradient(#000 0 14px, transparent 14px 60px, #000 60px); mask: linear-gradient(#000 0 14px, transparent 14px 60px, #000 60px); }
 @keyframes hud-reticle { 0%, 100% { transform: scale(1); opacity: .55; } 50% { transform: scale(1.12); opacity: .95; } }
 .hud-tags { position: absolute; top: 60px; right: 22px; display: grid; gap: 7px; justify-items: end; }
 .hud-tag { display: inline-flex; align-items: center; gap: 7px; padding: 5px 9px 5px 8px; border: 1px solid rgb(94 234 212 / .38); border-radius: 8px;
@@ -242,9 +233,4 @@ dialog::backdrop { background: rgb(8 48 47 / 0.85); }
   .hud-tags { top: 52px; right: 16px; gap: 5px; }
   .hud-tag { font-size: 9.5px; padding: 4px 7px; }
   .hud-reticle { display: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .monitor-bg::after, .hud-scan { display: none; }
-  .footer-ecg .run, .hud *, .hud-tag i { animation: none; }
 }

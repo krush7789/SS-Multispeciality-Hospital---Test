@@ -1,12 +1,10 @@
 import { useEffect, useRef } from 'react'
 
-// Runs frame(ctx, w, h, t, dt) on a canvas while it is on screen. Sized for the device pixel ratio;
-// with reduced motion it draws one still frame.
+// Runs frame(ctx, w, h, t, dt) on a canvas while it is on screen. Sized for the device pixel ratio.
 function useCanvasLoop(frame) {
   const ref = useRef(null)
   useEffect(() => {
     const c = ref.current, ctx = c.getContext('2d')
-    const still = matchMedia('(prefers-reduced-motion: reduce)').matches
     let w = 0, h = 0, raf = 0, last = 0, visible = false
     const draw = (t, dt) => { if (w && h) { ctx.clearRect(0, 0, w, h); frame(ctx, w, h, t, dt) } }
     const loop = (t) => {
@@ -17,7 +15,7 @@ function useCanvasLoop(frame) {
       draw(t, dt)
       raf = requestAnimationFrame(loop)
     }
-    const start = () => { if (!raf && !still && visible) { last = 0; raf = requestAnimationFrame(loop) } }
+    const start = () => { if (!raf && visible) { last = 0; raf = requestAnimationFrame(loop) } }
     const ro = new ResizeObserver(() => {
       const r = c.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1)
       w = r.width; h = r.height

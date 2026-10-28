@@ -43,7 +43,7 @@ export function Hero() {
               className="hero-zoom aspect-[10/11] w-full object-cover object-top" />
             <div aria-hidden className="hud">
               {['tl', 'tr', 'bl', 'br'].map((c) => <i key={c} className={`hud-c hud-${c}`} />)}
-              <i className="hud-scan" /><i className="hud-reticle" />
+              <i className="hud-scan" />
               <span className="hud-tags">
                 {[['ER 24×7', 'ACTIVE'], ['ICU', 'ONLINE'], ['NICU', 'ONLINE'], ['PICU', 'ONLINE'], ['HDU', 'ONLINE'], ['OT', 'READY']].map(([a, b], k) => (
                   <span key={a} className="hud-tag" style={{ '--k': k }}><i />{a}<em>{b}</em></span>
