@@ -17,7 +17,7 @@ export function About() {
           <p className="eyebrow mb-3">Who we are</p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Specialist care without leaving Rampur</h2>
           <div className="prose-ss mt-6">
-            <p>{hospital.name} brings {specialities.length} specialist departments together in one building near Old Ramlila, with an ICU, a NICU and an emergency that is open 24×7.</p>
+            <p>{hospital.name} brings {specialities.length} specialist departments together in one building near Old Ramlila, with an ICU, NICU, PICU, HDU and an emergency that is open 24×7.</p>
             <p>Our TPA desk helps insured patients with cashless approvals and reimbursement papers, so families can focus on recovery.</p>
           </div>
         </div>

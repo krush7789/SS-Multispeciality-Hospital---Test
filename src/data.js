@@ -1,7 +1,7 @@
 // All site content lives here. Hospital name, address, phones, email, departments and building photos are real;
 // the stock photos and sample reviews below are PLACEHOLDERS: swap in the hospital's own before launch.
 import {
-  Stethoscope, Scissors, HeartHandshake, Bone, Baby, Droplets, BedDouble,
+  Stethoscope, Scissors, HeartHandshake, Bone, Baby, Droplets, BedDouble, HeartPulse, Activity,
 } from 'lucide-react'
 
 export const hospital = {
@@ -10,9 +10,9 @@ export const hospital = {
   address: 'Near Topkhana Rd, Old Ramlila, Pranpur, Rampur, Uttar Pradesh 244901',
   landmark: 'Next to the Old Ramlila ground, off Topkhana Road',
   parking: 'Free two-wheeler and car parking inside the campus',
-  phone: '+91 82183 44961',
-  emergency: '+91 95487 30323',
-  whatsapp: '918218344961',
+  phone: '+91 95487 30323', // front desk: calls, WhatsApp and appointments
+  emergency: '+91 82183 44961', // emergency only (call and the Emergency WhatsApp button)
+  whatsapp: '919548730323',
   email: 'hospitalssmultispeciality@gmail.com',
   opd: 'Mon–Sat, 9:00 AM – 7:00 PM',
   mapUrl: 'https://www.google.com/maps/search/?api=1&query=' +
@@ -51,9 +51,9 @@ export const specialities = [
     conditions: ['Fractures and dislocations', 'Back and neck pain', 'Sports injuries'],
     procedures: ['Plaster and splinting', 'Fracture surgery', 'Joint pain management', 'Knee and hip replacement'] },
   { slug: 'paediatrics', name: 'Paediatrics', icon: Baby,
-    summary: 'Care for newborns, infants and children, backed by the hospital’s NICU for babies who need extra support.',
+    summary: 'Care for newborns, infants and children, backed by the hospital’s NICU and PICU for babies and children who need extra support.',
     conditions: ['Childhood fever and infections', 'Newborn jaundice', 'Growth and nutrition concerns', 'Breathing problems'],
-    procedures: ['Child OPD', 'Newborn care in the NICU', 'Vaccination advice'] },
+    procedures: ['Child OPD', 'Newborn care in the NICU', 'Intensive care for children in the PICU', 'Vaccination advice'] },
   { slug: 'urology', name: 'Urology', icon: Droplets,
     summary: 'Care for kidney stones, prostate and urinary problems in men and women.',
     conditions: ['Kidney and ureter stones', 'Prostate enlargement', 'Urinary infections', 'Difficulty passing urine'],
@@ -70,6 +70,12 @@ export const criticalCare = [
   { id: 'ncu', name: 'NICU', full: 'Neonatal Intensive Care Unit', icon: Baby,
     text: 'For newborns who need extra care after birth, such as premature or low-birth-weight babies, jaundice, or trouble feeding or breathing.',
     points: ['Mother and baby in the same hospital', 'Close watch on warmth, feeding and breathing', 'Paediatric team on call'] },
+  { id: 'picu', name: 'PICU', full: 'Pediatric Intensive Care Unit', icon: HeartPulse,
+    text: 'For infants and children who are seriously ill or recovering from major surgery, such as severe infections, breathing trouble or injuries.',
+    points: ['Continuous monitoring, day and night', 'Paediatric team on call', 'Parents kept informed at every step'] },
+  { id: 'hdu', name: 'HDU', full: 'High Dependency Unit', icon: Activity,
+    text: 'A step between the ICU and the ward: for patients who need closer watching than a ward can give, but not full intensive care.',
+    points: ['More frequent checks than a general ward', 'A safe step down after ICU care', 'Quick move to the ICU if needed'] },
 ]
 
 // TPA (Third-Party Administrator) desk. No insurer list is shown on purpose:
@@ -135,7 +141,7 @@ export const gallery = [
 
 export const whyUs = [
   { title: 'Six specialist departments', text: 'Medicine, surgery, gynaecology, orthopaedics, paediatrics and urology in one hospital.' },
-  { title: 'ICU and NICU on site', text: 'Critically ill adults and newborns who need extra care are looked after without a transfer.' },
+  { title: 'ICU, NICU, PICU and HDU on site', text: 'Critically ill adults, children and newborns are looked after without a transfer.' },
   { title: 'Help with insurance', text: 'Our TPA desk handles cashless approvals and reimbursement papers for insured patients.' },
   { title: 'Easy to reach', text: 'In the heart of Rampur near Old Ramlila, with parking and a 24×7 emergency.' },
 ]
@@ -143,7 +149,7 @@ export const whyUs = [
 export const faqs = [
   { q: 'What are the OPD timings?', a: 'OPD runs Monday to Saturday, 9:00 AM to 7:00 PM. Emergency is open 24×7, all days.' },
   { q: 'Do I need an appointment?', a: 'Walk-ins are welcome, but sending an appointment request on WhatsApp or by phone reduces your waiting time.' },
-  { q: 'Do you have an ICU and NICU?', a: 'Yes. The hospital has an ICU for critically ill patients and a NICU for newborns who need extra care.' },
+  { q: 'Do you have intensive care?', a: 'Yes. The hospital has an ICU for critically ill adults, a NICU for newborns, a PICU for children, and an HDU for patients who need closer watching than a ward can give.' },
   { q: 'Do you accept health insurance?', a: 'Yes, through our TPA desk. Share your insurer’s name before a planned admission to check whether cashless treatment is possible.' },
   { q: 'How do I call an ambulance?', a: `Call the emergency number ${hospital.emergency}. Our ambulance is available around the clock.` },
 ]

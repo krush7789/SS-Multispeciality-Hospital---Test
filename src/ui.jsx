@@ -8,9 +8,9 @@ import { hospital, specialities } from './data'
 import { useT } from './i18n'
 
 const tel = (n) => `tel:${n.replace(/\s/g, '')}`
-export const waLink = (msg = 'Hello, I would like to request an appointment.') =>
-  `https://wa.me/${hospital.whatsapp}?text=${encodeURIComponent(msg)}`
-export const emergencyLink = waLink('EMERGENCY: I need urgent help.')
+export const waLink = (msg = 'Hello, I would like to request an appointment.', to = hospital.whatsapp) =>
+  `https://wa.me/${to}?text=${encodeURIComponent(msg)}`
+export const emergencyLink = waLink('EMERGENCY: I need urgent help.', hospital.emergency.replace(/\D/g, ''))
 // Pointer position (0–1) for the .holo card effects in index.css.
 export const trackPointer = (e) => {
   const el = e.currentTarget, r = el.getBoundingClientRect()
@@ -321,7 +321,7 @@ function Footer() {
             <img src="/favicon.svg" alt="" className="size-10" />
             <span className="font-display text-lg font-bold text-white">{hospital.name}</span>
           </div>
-          <p className="mt-4 max-w-xs">Six specialist departments, ICU, NICU and a 24×7 emergency, close to home in Rampur.</p>
+          <p className="mt-4 max-w-xs">Six specialist departments, ICU, NICU, PICU, HDU and a 24×7 emergency, close to home in Rampur.</p>
           <div className="mt-6 flex gap-3">
             {[[Fb, 'Facebook', hospital.socials.facebook], [Ig, 'Instagram', hospital.socials.instagram], [Yt, 'YouTube', hospital.socials.youtube]].map(([I, l, h]) => (
               <a key={l} href={h} aria-label={l} className="grid size-10 place-items-center rounded-full border border-white/20 text-white transition hover:bg-white hover:text-brand-900"><I className="size-4" /></a>
